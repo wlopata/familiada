@@ -41,6 +41,15 @@
   padding: 0.2em 0;
 }
 
+.shopping-cart-quantity {
+  display: inline-block;
+  background: #d9534f;
+  color: #fff;
+  margin-left: 3px;
+  padding: 0px 7px 0px 7px;
+  border-radius: 8px;
+  font-weight: bold;
+}
 
 /* Component styles are injected through gulp */
 /* inject:css */

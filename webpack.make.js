@@ -51,7 +51,9 @@ module.exports = function makeWebpackConfig(options) {
                 'angular-socket-io',
                 'angular-ui-bootstrap',
                 'angular-ui-router',
-                'lodash'
+                'lodash',
+
+                'ngCart'
             ]
         };
     }
