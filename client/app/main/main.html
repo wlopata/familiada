@@ -25,4 +25,41 @@
       </span>
     </p>
   </form>
+
+  <div class="row">
+    <ul class="nav col-md-3 col-lg-2 col-sm-6" ng-repeat="product in $ctrl.matchingProducts">
+      <li>
+        <div class="panel panel-default" style="text-align: center;">
+          <div style="line-height: 1.2em; height: 2.4em; padding: 8px">
+            {{ product.name }}
+          </div>
+          <div class="panel-body" style="padding: 10">
+            <img width=96 height=96 src="assets/images/maslo-extra.jpg" alt="product thumbnail"/>
+          </div>
+          <div class="panel-footer clearfix" style="padding: 4px; font-family: Courier">
+            <span style="font-size: 1.5em; font-weight: bold; padding: 0" class="col-sm-5">
+              {{ product.price | number: 0 }}<span style="vertical-align: super; position: relative;, top: 0.15em; font-size: 0.6em">.{{ (product.price * 100) % 100 }}</span>
+            </span>
+
+            <div class="input-group col-sm-7">
+              <span class="input-group-btn">
+                <a class="btn btn-sm btn-primary" ng-click="$ctrl.cartDecrement(product)">
+                  <span class="glyphicon glyphicon-minus" />
+                </a>
+              </span>
+              <input type="text" name="quant[1]" class="form-control input-number input-sm" value="0"/>
+              <span class="input-group-btn">
+                <a class="btn btn-sm btn-primary" ng-click="$ctrl.cartIncrement(product)">
+                  <span class="glyphicon glyphicon-plus" />
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+        <!--<a class="btn btn-sm btn-primary"
+           ng-click="$ctrl.addToCart()">
+           <span class="glyphicon glyphicon-shopping-cart" /></a>-->
+      </li>
+    </ul>
+  </div>
 </div>
