@@ -11,13 +11,12 @@ export class NavbarComponent {
 
   isCollapsed = true;
 
-  constructor(Auth, ngCart) {
+  constructor(Auth) {
     'ngInject';
 
     this.isLoggedIn = Auth.isLoggedInSync;
     this.isAdmin = Auth.isAdminSync;
     this.getCurrentUser = Auth.getCurrentUserSync;
-    this.ngCart = ngCart;
   }
 
 }

@@ -38,6 +38,7 @@ function Socket(socketFactory) {
        * Syncs item creation/updates on 'model:save'
        */
       socket.on(`${modelName}:save`, function(item) {
+        /*
         var oldItem = _.find(array, {
           _id: item._id
         });
@@ -52,6 +53,16 @@ function Socket(socketFactory) {
         } else {
           array.push(item);
         }
+
+        cb(event, item, array);*/
+        console.log('receiving update of display');
+        Object.assign(array, item);
+
+        cb(event, item, array);
+      });
+
+      socket.on(`${modelName}:set`, function(item) {
+        Object.assign(array, item)
 
         cb(event, item, array);
       });
@@ -74,6 +85,7 @@ function Socket(socketFactory) {
      * @param modelName
      */
     unsyncUpdates(modelName) {
+      socket.removeAllListeners(`${modelName}:set`);
       socket.removeAllListeners(`${modelName}:save`);
       socket.removeAllListeners(`${modelName}:remove`);
     }

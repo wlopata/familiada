@@ -12,8 +12,6 @@ import uiBootstrap from 'angular-ui-bootstrap';
 // import ngMessages from 'angular-messages';
 // import ngValidationMatch from 'angular-validation-match';
 
-import ngCart from 'ngCart'
-
 import {
   routeConfig
 } from './app.config';
@@ -31,7 +29,7 @@ import socket from '../components/socket/socket.service';
 import './app.css';
 
 angular.module('sklepixApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
-  uiBootstrap, 'ngCart', _Auth, account, admin, navbar, footer, main, constants, socket, util
+  uiBootstrap, _Auth, account, admin, navbar, footer, main, constants, socket, util
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {
