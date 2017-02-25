@@ -1,14 +1,11 @@
 <div>
-  <div ng-repeat="row in $ctrl.display track by $index" style="text-align: center">
-    <input type="text"
-           ng-model="$ctrl.display[$index]"
-           ng-trim="false"
-           ng-change="$ctrl.sendDisplay()"
-           style="font-family: monospace;"
-           size="31" />
-  </div>
-
   <br /><br />
+  <div style="text-align: center">
+    <button ng-repeat="q in $ctrl.questions track by $index"
+            ng-click="$ctrl.newQuestion($index)"
+            style="margin: 2px"><h2>Pytanie {{ $index + 1 }}</h2></button>
+  </div>
+  <br />
   <div class="row" style="text-align: center">
     <div class="col-xs-4">
       <button ng-click="$ctrl.clearLeft()">clear</button><br /><br />
@@ -34,30 +31,22 @@
   </div>
 
 
-  <div class="row" style="text-align: center">
-    <div class="col-xs-4">
-      <button ng-click="$ctrl.newQuestion(1)">Q1</button><br /><br />
-      <button ng-click="$ctrl.newQuestion(2)">Q2</button><br /><br />
-      <button ng-click="$ctrl.newQuestion(3)">Q3</button><br /><br />
-    </div>
-    <div class="col-xs-4">
-      <button ng-click="$ctrl.newQuestion(4)">Q4</button><br /><br />
-      <button ng-click="$ctrl.newQuestion(5)">Q5</button><br /><br />
-      <button ng-click="$ctrl.newQuestion(6)">Q6</button><br /><br />
-    </div>
-    <div class="col-xs-4">
-      <button ng-click="$ctrl.newQuestion(7)">Q7</button><br /><br />
-      <button ng-click="$ctrl.newQuestion(8)">Q8</button><br /><br />
-      <button ng-click="$ctrl.newQuestion(9)">Q9</button><br /><br />
-    </div>
-  </div>
-
   <div style="text-align: center">
     <div ng-repeat="q in $ctrl.questions track by $index">
-      <button ng-click="$ctrl.newQuestion(q.length)"><h2>Pytanie {{ $index + 1 }}</h2></button><br /><br />
+      <button ng-click="$ctrl.newQuestion($index)"><h2>Pytanie {{ $index + 1 }}</h2></button><br /><br />
       <div ng-repeat="ans in q track by $index">
         <button ng-click="$ctrl.answer($index, ans[0], ans[1])">{{ ans[0] }} -- {{ ans[1] }} pkt</button><br /><br />
       </div>
     </div>
+  </div>
+
+
+  <div ng-repeat="row in $ctrl.display track by $index" style="text-align: center">
+    <input type="text"
+           ng-model="$ctrl.display[$index]"
+           ng-trim="false"
+           ng-change="$ctrl.sendDisplay()"
+           style="font-family: monospace;"
+           size="31" />
   </div>
 </div>

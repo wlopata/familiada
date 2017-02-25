@@ -75,6 +75,9 @@ export class MainController {
     '                              ',
   ];
 
+  answersRevealed = [];
+  currentQuestionIdx = -1;
+
   pxMap = {
     a: [
       ' XXX ',
@@ -627,9 +630,6 @@ export class MainController {
     ]
   };
 
-  awesomeThings = [];
-  newThing = '';
-
   /*@ngInject*/
   constructor($http, $scope, socket) {
     this.$http = $http;
@@ -758,16 +758,38 @@ export class MainController {
     }
   }
 
-  newQuestion(answerCnt) {
+  newQuestion(qIdx) {
     this._clearAll();
+    this.answersRevealed = {};
+    this.currentQuestionIdx = qIdx;
+
+    var answerCnt = this.questions[qIdx].length;
     for (var ans = 1; ans <= answerCnt; ans++) {
       this.setSubstr(ans, 4, ans + ' ' + ':'.repeat(17) + ' __');
     }
+    this.setSubstr(answerCnt + 2, 19, 'suma  0');
     this.sendDisplay();
   }
 
-  answer(idx, ans, pts) {
-    this.setSubstr(idx + 1, 6, ans + ' '.repeat(20 - (ans + pts).length) + pts);
+  pointsInStack() {
+    var pts = 0;
+    var anss = Object.keys(this.answersRevealed);
+    for (var i = 0; i < anss.length; i++) {
+      pts += this.questions[this.currentQuestionIdx][anss[i]][1];
+    }
+    return pts;
+  }
+
+  answer(aIdx, ans, pts) {
+    if (this.currentQuestionIdx == -1) {
+      console.warn('Current question is not defined!');
+      return;
+    }
+    var answerCnt = this.questions[this.currentQuestionIdx].length;
+    this.answersRevealed[aIdx] = true;
+    var ptsTotal = this.pointsInStack();
+    this.setSubstr(aIdx + 1, 6, ans + ' '.repeat(20 - (ans + pts).length) + pts);
+    this.setSubstr(answerCnt + 2, 19, 'suma ' + (ptsTotal > 9 ? '' : ' ') + ptsTotal);
     this.sendDisplay();
   }
 }
