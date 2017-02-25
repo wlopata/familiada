@@ -16,10 +16,13 @@
     </div>
     <div class="col-xs-4">
     <button ng-click="$ctrl.clearBoth()">clear</button><br /><br />
-    <br /><br /><br />
-    <br /><br /><br />
-    <br /><br /><br />
-    <br /><br /><br />
+    <div style="text-align: center">
+    <div ng-repeat="q in $ctrl.questions track by $index" ng-show="$ctrl.currentQuestionIdx == $index">
+      <div ng-repeat="ans in q track by $index">
+        <button ng-click="$ctrl.answer($index, ans[0], ans[1])">{{ ans[0] }} -- {{ ans[1] }} pkt</button><br /><br />
+      </div>
+    </div>
+  </div>
     </div>
     <div class="col-xs-4">
       <button ng-click="$ctrl.clearRight()">clear</button><br /><br />
@@ -29,17 +32,6 @@
       <button ng-click="$ctrl.rightXXX()">XXX</button><br /><br />
     </div>
   </div>
-
-
-  <div style="text-align: center">
-    <div ng-repeat="q in $ctrl.questions track by $index">
-      <button ng-click="$ctrl.newQuestion($index)"><h2>Pytanie {{ $index + 1 }}</h2></button><br /><br />
-      <div ng-repeat="ans in q track by $index">
-        <button ng-click="$ctrl.answer($index, ans[0], ans[1])">{{ ans[0] }} -- {{ ans[1] }} pkt</button><br /><br />
-      </div>
-    </div>
-  </div>
-
 
   <div ng-repeat="row in $ctrl.display track by $index" style="text-align: center">
     <input type="text"
