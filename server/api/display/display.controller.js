@@ -21,17 +21,30 @@ function handleError(res, statusCode) {
 }
 
 var display = [
+  '                              ',
+  '                              ',
+  'XXXKXJ X  X X X  X KXJ XXJ KXJ',
+  'X  X X XGEX X X  X X X X X X X',
+  'XX XXX X  X X X  X XXX X X XXX',
+  'X  X X X  X X X  X X X X X X X',
+  'X  X X X  X X XX X X X XXM X X',
+  '                              ',
+  '                              ',
+  '                              ',
+];
+
+/*var display = [
   'a ą b c ć d e ę f g h i j k l ',
-  'ł m n ń o ó p r s ś t u w x y ',
+  'ł m n ń o ó p r s ś t u w y z ',
   'z ż ź _                       ',
   '0 1 2 3 4 5 6 7 8 9           ',
   'a ą b c ć d e ę f g h i j k l ',
-  'ł m n ń o ó p r s ś t u w x y ',
+  'ł m n ń o ó p r s ś t u w y z ',
   'z ż ź _                       ',
   '                              ',
   'a ą b c ć d e ę f g h i j k l ',
-  'ł m n ń o ó p r s ś t u w x y ',
-];
+  'ł m n ń o ó p r s ś t u w y z ',
+];*/
 
 export function get(req, res) {
   res.send(display);

@@ -51,4 +51,13 @@
       <button ng-click="$ctrl.newQuestion(9)">Q9</button><br /><br />
     </div>
   </div>
+
+  <div style="text-align: center">
+    <div ng-repeat="q in $ctrl.questions track by $index">
+      <button ng-click="$ctrl.newQuestion(q.length)"><h2>Pytanie {{ $index + 1 }}</h2></button><br /><br />
+      <div ng-repeat="ans in q track by $index">
+        <button ng-click="$ctrl.answer($index, ans[0], ans[1])">{{ ans[0] }} -- {{ ans[1] }} pkt</button><br /><br />
+      </div>
+    </div>
+  </div>
 </div>
