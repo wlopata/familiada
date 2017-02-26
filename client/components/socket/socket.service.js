@@ -59,6 +59,8 @@ function Socket(socketFactory) {
           'wrong_answer': '/assets/sounds/bledna_odpowiedz.wav',
           'correct_answer': '/assets/sounds/poprawna_odpowiedz.wav',
           'round_starts_or_ends': '/assets/sounds/przerywnik_przed_i_po_rundzie.wav',
+          'intro': '/assets/sounds/intro.wav',
+          'final_captions': '/assets/sounds/napisy_koncowe.wav',
         };
         if (array.soundId != item.soundId && item.soundToPlay in soundMap) {
           if (item.soundId in playedSoundIds) {

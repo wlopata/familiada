@@ -737,6 +737,18 @@ export class MainController {
     this.display.soundId = Date.now();
   }
 
+  playIntro() {
+    this.display.soundToPlay = 'intro';
+    this.display.soundId = Date.now();
+    this.sendDisplay();
+  }
+
+  playFinalCaptions() {
+    this.display.soundToPlay = 'final_captions';
+    this.display.soundId = Date.now();
+    this.sendDisplay();
+  }
+
   leftBigX() {
     this._clearLeft();
     this._bigX(3, 0);

@@ -40,6 +40,13 @@
     </div>
   </div>
 
+  <div>
+    <button ng-click="$ctrl.playIntro()"><h2>intro</h2></button> 
+    <button ng-click="$ctrl.playFinalCaptions()"><h2>napisy końcowe</h2></button> 
+  </div>
+  <br />
+  <br />
+  
   <div ng-repeat="row in $ctrl.display.main track by $index" style="text-align: center">
     <input type="text"
            ng-model="$ctrl.display.main[$index]"
