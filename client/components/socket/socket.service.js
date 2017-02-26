@@ -61,6 +61,10 @@ function Socket(socketFactory) {
         cb(event, item, array);
       });
 
+      socket.on(`playSound`, function(item) {
+        console.log('play sound: ' + item);
+      });
+
       socket.on(`${modelName}:set`, function(item) {
         Object.assign(array, item)
 

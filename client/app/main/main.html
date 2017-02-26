@@ -1,15 +1,30 @@
-<div style="background: #333; width: 100%; height: 100vh;">
-  <table style="background: #333; margin: 0 auto;">
-    <tr ng-repeat="row in $ctrl.display track by $index">
-      <td ng-repeat="char in row track by $index" class="bigPixel">
-        <table>
-          <tr ng-repeat="pixelRow in $ctrl.pxMap[char] track by $index">
-            <td ng-repeat="pixel in pixelRow track by $index"
-                class="smallPixel"
-                style="background: {{ pixel == ' ' ? '#111' : '#ff0' }}" />
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+<div class="row">
+  <div ng-repeat="ptsOwner in ['ptsLeft', 'ptsMiddle', 'ptsRight']"
+       class="col-lg-4"
+       style="font-color: #fff; text-align: center">
+    <table ng-repeat="i in (' '.repeat(3 - ('' + $ctrl.display[ptsOwner]).length) + $ctrl.display[ptsOwner]).split('') track by $index" 
+        class="bigPixel"
+        style="font-color: #fff; display: inline">
+        <tr ng-repeat="pixelRow in $ctrl.pxMap[i] track by $index">
+          <td ng-repeat="pixel in pixelRow track by $index"
+            class="smallPixelPointsDashboard"
+            style="background: {{ pixel == ' ' ? '#111' : '#ff0' }}" />
+        </tr>
+      </table>
+  </div>
 </div>
+<br />
+
+<table style="background: #333; margin: 0 auto;">
+  <tr ng-repeat="row in $ctrl.display.main track by $index">
+    <td ng-repeat="char in row track by $index" class="bigPixel">
+      <table>
+        <tr ng-repeat="pixelRow in $ctrl.pxMap[char] track by $index">
+          <td ng-repeat="pixel in pixelRow track by $index"
+              class="smallPixel"
+              style="background: {{ pixel == ' ' ? '#111' : '#ff0' }}" />
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

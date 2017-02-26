@@ -20,18 +20,27 @@ function handleError(res, statusCode) {
   };
 }
 
-var display = [
-  '                              ',
-  '                              ',
-  'XXXKXJ X  X X X  X KXJ XXJ KXJ',
-  'X  X X XGEX X X  X X X X X X X',
-  'XX XXX X  X X X  X XXX X X XXX',
-  'X  X X X  X X X  X X X X X X X',
-  'X  X X X  X X XX X X X XXM X X',
-  '                              ',
-  '                              ',
-  '                              ',
-];
+var display = {
+  ptsLeft: 0,
+  ptsRight: 0,
+  ptsInStack: 0,
+  ptsMiddle: 0,
+  answersRevealed: {},
+  multiplier: 1,
+  currentQuestionIdx: -1,
+  main: [
+    '                              ',
+    '                              ',
+    'XXXKXJ X  X X X  X KXJ XXJ KXJ',
+    'X  X X XGEX X X  X X X X X X X',
+    'XX XXX X  X X X  X XXX X X XXX',
+    'X  X X X  X X X  X X X X X X X',
+    'X  X X X  X X XX X X X XXM X X',
+    '                              ',
+    '                              ',
+    '                              ',
+  ]
+};
 
 /*var display = [
   'a ą b c ć d e ę f g h i j k l ',

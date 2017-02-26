@@ -62,21 +62,28 @@ export class MainController {
       ['o mój rozmarynie', 8]
     ]
   ];
-  display = [
-    '                              ',
-    '                              ',
-    '                              ',
-    '                              ',
-    '                              ',
-    '                              ',
-    '                              ',
-    '                              ',
-    '                              ',
-    '                              ',
-  ];
-
-  answersRevealed = [];
-  currentQuestionIdx = -1;
+  cleanDisplay = {
+    ptsLeft: 0,
+    ptsRight: 0,
+    ptsInStack: 0,
+    ptsMiddle: 0,
+    answersRevealed: {},
+    multiplier: 1,
+    currentQuestionIdx: -1,
+    main: [
+      '                              ',
+      '                              ',
+      'XXXKXJ X  X X X  X KXJ XXJ KXJ',
+      'X  X X XGEX X X  X X X X X X X',
+      'XX XXX X  X X X  X XXX X X XXX',
+      'X  X X X  X X X  X X X X X X X',
+      'X  X X X  X X XX X X X XXM X X',
+      '                              ',
+      '                              ',
+      '                              ',
+    ]
+  };
+  display = this.cleanDisplay;
 
   pxMap = {
     a: [
@@ -652,8 +659,14 @@ export class MainController {
     this.$http.post('/api/display', this.display);
   }
 
+  clearDisplay() {
+    this.display = this.cleanDisplay;
+    this.sendDisplay();
+  }
+
   setSubstr(row, col, str) {
-    this.display[row] = this.display[row].substring(0, col) + str + this.display[row].substring(col + str.length, 30);
+    this.display.main[row] =
+      this.display.main[row].substring(0, col) + str + this.display.main[row].substring(col + str.length, 30);
   }
 
   _X(row, col) {
@@ -758,10 +771,23 @@ export class MainController {
     }
   }
 
+  leftWon() {
+    this.display.ptsLeft += this.display.ptsMiddle;
+    this.display.ptsMiddle = this.display.ptsInStack = 0;
+    this.sendDisplay();
+  }
+
+
+  rightWon() {
+    this.display.ptsRight += this.display.ptsMiddle;
+    this.display.ptsMiddle = this.display.ptsInStack = 0;
+    this.sendDisplay();
+  }
+
   newQuestion(qIdx) {
     this._clearAll();
-    this.answersRevealed = {};
-    this.currentQuestionIdx = qIdx;
+    this.display.answersRevealed = {};
+    this.display.currentQuestionIdx = qIdx;
 
     var answerCnt = this.questions[qIdx].length;
     for (var ans = 1; ans <= answerCnt; ans++) {
@@ -773,21 +799,23 @@ export class MainController {
 
   pointsInStack() {
     var pts = 0;
-    var anss = Object.keys(this.answersRevealed);
+    var anss = Object.keys(this.display.answersRevealed);
     for (var i = 0; i < anss.length; i++) {
-      pts += this.questions[this.currentQuestionIdx][anss[i]][1];
+      pts += this.questions[this.display.currentQuestionIdx][anss[i]][1];
     }
     return pts;
   }
 
   answer(aIdx, ans, pts) {
-    if (this.currentQuestionIdx == -1) {
+    if (this.display.currentQuestionIdx == -1) {
       console.warn('Current question is not defined!');
       return;
     }
-    var answerCnt = this.questions[this.currentQuestionIdx].length;
-    this.answersRevealed[aIdx] = true;
+    var answerCnt = this.questions[this.display.currentQuestionIdx].length;
+    this.display.answersRevealed[aIdx] = true;
     var ptsTotal = this.pointsInStack();
+    this.display.ptsInStack = ptsTotal;
+    this.display.ptsMiddle = this.display.multiplier * ptsTotal;
     this.setSubstr(aIdx + 1, 6, ans + ' '.repeat(20 - (ans + pts).length) + pts);
     this.setSubstr(answerCnt + 2, 19, 'suma ' + (ptsTotal > 9 ? '' : ' ') + ptsTotal);
     this.sendDisplay();

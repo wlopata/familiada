@@ -1,6 +1,11 @@
-<div>
+<div style="text-align: center">
   <br /><br />
   <div style="text-align: center">
+    <button ng-repeat="mltpl in [1, 2, 3]"
+            ng-click="$ctrl.display.multiplier = mltpl"
+            style="margin: 2px"><h2>x{{ mltpl }}</h2></button>
+    <h2 style="display: inline; color:#fff">Obecnie: {{$ctrl.display.multiplier}}</h2>
+    <br /><br />
     <button ng-repeat="q in $ctrl.questions track by $index"
             ng-click="$ctrl.newQuestion($index)"
             style="margin: 2px"><h2>Pytanie {{ $index + 1 }}</h2></button>
@@ -13,11 +18,12 @@
       <button ng-click="$ctrl.leftX()">X</button><br /><br />
       <button ng-click="$ctrl.leftXX()">XX</button><br /><br />
       <button ng-click="$ctrl.leftXXX()">XXX</button><br /><br />
+      <button ng-click="$ctrl.leftWon()">Win!</button> <input type="text" ng-model="$ctrl.display.ptsLeft" size="4"><br /><br />
     </div>
     <div class="col-xs-4">
     <button ng-click="$ctrl.clearBoth()">clear</button><br /><br />
     <div style="text-align: center">
-    <div ng-repeat="q in $ctrl.questions track by $index" ng-show="$ctrl.currentQuestionIdx == $index">
+    <div ng-repeat="q in $ctrl.questions track by $index" ng-show="$ctrl.display.currentQuestionIdx == $index">
       <div ng-repeat="ans in q track by $index">
         <button ng-click="$ctrl.answer($index, ans[0], ans[1])">{{ ans[0] }} -- {{ ans[1] }} pkt</button><br /><br />
       </div>
@@ -30,15 +36,19 @@
       <button ng-click="$ctrl.rightX()">X</button><br /><br />
       <button ng-click="$ctrl.rightXX()">XX</button><br /><br />
       <button ng-click="$ctrl.rightXXX()">XXX</button><br /><br />
+      <button ng-click="$ctrl.rightWon()">Win!</button> <input type="text" ng-model="$ctrl.display.ptsRight" size="4"><br /><br />
     </div>
   </div>
 
-  <div ng-repeat="row in $ctrl.display track by $index" style="text-align: center">
+  <div ng-repeat="row in $ctrl.display.main track by $index" style="text-align: center">
     <input type="text"
-           ng-model="$ctrl.display[$index]"
+           ng-model="$ctrl.display.main[$index]"
            ng-trim="false"
            ng-change="$ctrl.sendDisplay()"
            style="font-family: monospace;"
            size="31" />
   </div>
+
+  <br /><br />
+  <button ng-click="$ctrl.clearDisplay()">CLEAR ALL</button>
 </div>
