@@ -7,7 +7,7 @@ export class MainController {
     [ 
       // 'Na jakich imprezach Kwaq ściągnął spodnie?',
       ['wesele marebuszy', 23],
-      ['koncenrt strachów', 18],
+      ['koncert strachów', 18],
       ['wesele miłki i m.', 13],
       ['wesele pędzipioł', 7],
       ['u gruszki', 5],
@@ -670,7 +670,7 @@ export class MainController {
   }
 
   clearDisplay() {
-    console.log('clear display')
+    console.log('clear display');
     Object.assign(this.display, this.cleanDisplay);
     this.sendDisplay();
   }
@@ -729,6 +729,11 @@ export class MainController {
 
   _correctAnswerSound() {
     this.display.soundToPlay = 'correct_answer';
+    this.display.soundId = Date.now();
+  }
+
+  _roundStartsOrEndsSound() {
+    this.display.soundToPlay = 'round_starts_or_ends';
     this.display.soundId = Date.now();
   }
 
@@ -803,6 +808,7 @@ export class MainController {
   leftWon() {
     this.display.ptsLeft += this.display.ptsMiddle;
     this.display.ptsMiddle = this.display.ptsInStack = 0;
+    this._roundStartsOrEndsSound();
     this.sendDisplay();
   }
 
@@ -810,6 +816,7 @@ export class MainController {
   rightWon() {
     this.display.ptsRight += this.display.ptsMiddle;
     this.display.ptsMiddle = this.display.ptsInStack = 0;
+    this._roundStartsOrEndsSound();
     this.sendDisplay();
   }
 
@@ -823,6 +830,7 @@ export class MainController {
       this.setSubstr(ans, 4, ans + ' ' + ':'.repeat(17) + ' __');
     }
     this.setSubstr(answerCnt + 2, 19, 'suma  0');
+    this._roundStartsOrEndsSound();
     this.sendDisplay();
   }
 

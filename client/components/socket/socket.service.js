@@ -20,7 +20,6 @@ function Socket(socketFactory) {
 
   return {
     socket,
-
     /**
      * Register listeners to sync an array with updates on a model
      *
@@ -37,6 +36,7 @@ function Socket(socketFactory) {
       /**
        * Syncs item creation/updates on 'model:save'
        */
+      var playedSoundIds = {};
       socket.on(`${modelName}:save`, function(item) {
         /*
         var oldItem = _.find(array, {
@@ -58,11 +58,17 @@ function Socket(socketFactory) {
         var soundMap = {
           'wrong_answer': '/assets/sounds/bledna_odpowiedz.wav',
           'correct_answer': '/assets/sounds/poprawna_odpowiedz.wav',
+          'round_starts_or_ends': '/assets/sounds/przerywnik_przed_i_po_rundzie.wav',
         };
         if (array.soundId != item.soundId && item.soundToPlay in soundMap) {
-          console.log('playing sound: ' + item.soundToPlay);
-          var audio = new Audio(soundMap[item.soundToPlay]);
-          audio.play()
+          if (item.soundId in playedSoundIds) {
+            console.log('duplicate sound detected!');
+          } else {
+            playedSoundIds[item.soundId] = true;
+            console.log('playing sound: ' + item.soundToPlay);
+            var audio = new Audio(soundMap[item.soundToPlay]);
+            audio.play();
+          }
         }
         Object.assign(array, item);
         cb(event, item, array);
