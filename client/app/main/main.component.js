@@ -85,6 +85,31 @@ export class MainController {
       '                              ',
     ]
   };
+
+  finalDisplay = {
+    ptsLeft: 0,
+    ptsRight: 0,
+    ptsInStack: 0,
+    ptsMiddle: 0,
+    answersRevealed: {},
+    multiplier: 1,
+    currentQuestionIdx: -1,
+    soundToPlay: 'pre_final',
+    soundId: '',
+    main: [
+      '                              ',
+      '                              ',
+      '___________ YY  YY ___________',
+      '___________ YY  YY ___________',
+      '___________ YY  YY ___________',
+      '___________ YY  YY ___________',
+      '___________ YY  YY ___________',
+      '                              ',
+      '      suma   0                ',
+      '                              ',
+    ]
+  };
+
   display = {};
 
   sounds = {
@@ -643,6 +668,15 @@ export class MainController {
       'XXXXX',
       'XXXXX',
       'XXXXX'
+    ],
+    'Y': [
+      ' XXX ',
+      'XXXXX',
+      'XXXXX',
+      'XXXXX',
+      'XXXXX',
+      'XXXXX',
+      ' XXX '
     ]
   };
 
@@ -868,6 +902,29 @@ export class MainController {
     this.setSubstr(aIdx + 1, 6, ans + ' '.repeat(20 - (ans + pts).length) + pts);
     this.setSubstr(answerCnt + 2, 19, 'suma ' + (ptsTotal > 9 ? '' : ' ') + ptsTotal);
     this._correctAnswerSound();
+    this.sendDisplay();
+  }
+
+  startFinal() {
+    Object.assign(this.display, this.finalDisplay);
+    this.display.soundId = Date.now();
+    this.sendDisplay();
+  }
+
+  syncFinalAnswerLeft(id) {
+    var ans = 'kubeczek';
+    var pts = Math.floor(Math.random() * 20);
+    this.setSubstr(id + 1, 0, ' '.repeat(11 - ans.length) + ans + ' '.repeat(pts > 9 ? 1 : 2) + pts);
+    this.ptsMiddle += pts;
+    this.sendDisplay();
+  }
+
+  syncFinalAnswerRight(id) {
+    var ans = 'kubeczek';
+    var pts = Math.floor(Math.random() * 20);
+    this.setSubstr(id + 1, 16, ' '.repeat(pts > 9 ? 0 : 1) + pts + ' ' + ans + ' '.repeat(11 - ans.length));
+    this.display.ptsMiddle += pts;
+    this.setSubstr(8, 6, 'suma' + ' '.repeat(4 - ('' + this.display.ptsMiddle).length) + this.display.ptsMiddle);
     this.sendDisplay();
   }
 }

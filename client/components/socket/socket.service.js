@@ -61,6 +61,7 @@ function Socket(socketFactory) {
           'round_starts_or_ends': '/assets/sounds/przerywnik_przed_i_po_rundzie.wav',
           'intro': '/assets/sounds/intro.wav',
           'final_captions': '/assets/sounds/napisy_koncowe.wav',
+          'pre_final': '/assets/sounds/przerywnik_przed_finalem.wav',
         };
         if (array.soundId != item.soundId && item.soundToPlay in soundMap) {
           if (item.soundId in playedSoundIds) {
