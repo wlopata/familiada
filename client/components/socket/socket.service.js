@@ -56,7 +56,8 @@ function Socket(socketFactory) {
 
         cb(event, item, array);*/
         var soundMap = {
-          'wrong_answer': '/assets/sounds/bledna_odpowiedz.wav'
+          'wrong_answer': '/assets/sounds/bledna_odpowiedz.wav',
+          'correct_answer': '/assets/sounds/poprawna_odpowiedz.wav',
         };
         if (array.soundId != item.soundId && item.soundToPlay in soundMap) {
           console.log('playing sound: ' + item.soundToPlay);
