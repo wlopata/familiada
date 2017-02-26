@@ -766,6 +766,11 @@ export class MainController {
     this.display.soundId = Date.now();
   }
 
+  _correctAnswerFinalSound() {
+    this.display.soundToPlay = 'correct_answer_final';
+    this.display.soundId = Date.now();
+  }
+
   _roundStartsOrEndsSound() {
     this.display.soundToPlay = 'round_starts_or_ends';
     this.display.soundId = Date.now();
@@ -911,20 +916,24 @@ export class MainController {
     this.sendDisplay();
   }
 
-  syncFinalAnswerLeft(id) {
-    var ans = 'kubeczek';
-    var pts = Math.floor(Math.random() * 20);
-    this.setSubstr(id + 1, 0, ' '.repeat(11 - ans.length) + ans + ' '.repeat(pts > 9 ? 1 : 2) + pts);
-    this.ptsMiddle += pts;
-    this.sendDisplay();
-  }
+  syncFinalAnswer(id, side) {
+    var ans = document.getElementsByName('ans' + side + id)[0].value;
+    var pts = Math.floor(Math.random() * 3);
 
-  syncFinalAnswerRight(id) {
-    var ans = 'kubeczek';
-    var pts = Math.floor(Math.random() * 20);
-    this.setSubstr(id + 1, 16, ' '.repeat(pts > 9 ? 0 : 1) + pts + ' ' + ans + ' '.repeat(11 - ans.length));
+    if (side == 'L') {
+      this.setSubstr(id + 1, 0, ' '.repeat(11 - ans.length) + ans + ' '.repeat(pts > 9 ? 1 : 2) + pts);
+    } else {
+      this.setSubstr(id + 1, 16, ' '.repeat(pts > 9 ? 0 : 1) + pts + ' ' + ans + ' '.repeat(11 - ans.length));
+    }
+
     this.display.ptsMiddle += pts;
     this.setSubstr(8, 6, 'suma' + ' '.repeat(4 - ('' + this.display.ptsMiddle).length) + this.display.ptsMiddle);
+
+    if (pts > 0) {
+      this._correctAnswerFinalSound();
+    } else {
+      this._wrongAnswerSound();
+    }
     this.sendDisplay();
   }
 }

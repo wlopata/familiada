@@ -49,22 +49,24 @@
   <button ng-click="$ctrl.startFinal()"><h2>rozpocznij finał</h2></button>
   <br /><br />
   <div class="row">
-    <div class="col-xs-6">
-      <div ng-repeat="i in [1, 2, 3, 4, 5]">
-       <input type="text" style="font-family: monospace;" size="12" name="ansL{{i}}"/>
-       <input type="text" style="font-family: monospace;" size="3" name="ptsL{{i}}" value="0" />
-       <button ng-click="$ctrl.syncFinalAnswerLeft(i)">Sync L{{i}}</button>
-       <br /><br />
+    <form name="$ctrl.finalAnswers" novalidate>
+      <div class="col-xs-6">
+        <div ng-repeat="i in [1, 2, 3, 4, 5]">
+         <input type="text" style="font-family: monospace;" size="12" name="ansL{{i}}"/>
+         <input type="text" style="font-family: monospace;" size="3" name="ptsL{{i}}" value="0" />
+         <button ng-click="$ctrl.syncFinalAnswer(i, 'L')">Sync L{{i}}</button>
+         <br /><br />
+        </div>
       </div>
-    </div>
-    <div class="col-xs-6">
-      <div ng-repeat="i in [1, 2, 3, 4, 5]">
-       <input type="text" style="font-family: monospace;" size="12" name="ansR{{i}}"/>
-       <input type="text" style="font-family: monospace;" size="3" name="ptsR{{i}}" value="0" />
-       <button ng-click="$ctrl.syncFinalAnswerRight(i)">Sync R{{i}}</button>
-       <br /><br />
+      <div class="col-xs-6">
+        <div ng-repeat="i in [1, 2, 3, 4, 5]">
+         <input type="text" style="font-family: monospace;" size="12" name="ansR{{i}}"/>
+         <input type="text" style="font-family: monospace;" size="3" name="ptsR{{i}}" value="0" />
+         <button ng-click="$ctrl.syncFinalAnswer(i, 'R')">Sync R{{i}}</button>
+         <br /><br />
+        </div>
       </div>
-    </div>
+    </form>
   </div>
   <br /><br />
   <div ng-repeat="row in $ctrl.display.main track by $index" style="text-align: center">
