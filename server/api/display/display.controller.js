@@ -28,6 +28,8 @@ var display = {
   answersRevealed: {},
   multiplier: 1,
   currentQuestionIdx: -1,
+  soundToPlay: '',
+  soundId: '',
   main: [
     '                              ',
     '                              ',

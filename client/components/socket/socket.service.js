@@ -55,14 +55,16 @@ function Socket(socketFactory) {
         }
 
         cb(event, item, array);*/
-        console.log('receiving update of display');
+        var soundMap = {
+          'wrong_answer': '/assets/sounds/bledna_odpowiedz.wav'
+        };
+        if (array.soundId != item.soundId && item.soundToPlay in soundMap) {
+          console.log('playing sound: ' + item.soundToPlay);
+          var audio = new Audio(soundMap[item.soundToPlay]);
+          audio.play()
+        }
         Object.assign(array, item);
-
         cb(event, item, array);
-      });
-
-      socket.on(`playSound`, function(item) {
-        console.log('play sound: ' + item);
       });
 
       socket.on(`${modelName}:set`, function(item) {

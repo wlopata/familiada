@@ -70,6 +70,8 @@ export class MainController {
     answersRevealed: {},
     multiplier: 1,
     currentQuestionIdx: -1,
+    soundToPlay: '',
+    soundId: '',
     main: [
       '                              ',
       '                              ',
@@ -83,7 +85,14 @@ export class MainController {
       '                              ',
     ]
   };
-  display = this.cleanDisplay;
+  display = {};
+
+  sounds = {
+    'intro': '/assets/sounds/intro.wav',
+    'napisy koncowe': '/assets/sounds/napisy_koncowe.wav',
+    'przerywnik po 1 rundzie': '/assets/sounds/przerywnik_po_1_rundzie.wav',
+    'przerywnik przed finałem': '/assets/sounds/przerywnik_przed_finalem.wav',
+  };
 
   pxMap = {
     a: [
@@ -641,6 +650,7 @@ export class MainController {
   constructor($http, $scope, socket) {
     this.$http = $http;
     this.socket = socket;
+    Object.assign(this.display, this.cleanDisplay);
 
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('display');
@@ -660,7 +670,8 @@ export class MainController {
   }
 
   clearDisplay() {
-    this.display = this.cleanDisplay;
+    console.log('clear display')
+    Object.assign(this.display, this.cleanDisplay);
     this.sendDisplay();
   }
 
@@ -711,21 +722,34 @@ export class MainController {
     this.setSubstr(row + 4, col, 'M L');
   }
 
+  _wrongAnswerSound() {
+    this.display.soundToPlay = 'wrong_answer';
+    this.display.soundId = Date.now();
+  }
+
+  _correctAnswerSound() {
+    this.display.soundToPlay = 'correct_answer';
+    this.display.soundId = Date.now();
+  }
+
   leftBigX() {
     this._clearLeft();
     this._bigX(3, 0);
+    this._wrongAnswerSound();
     this.sendDisplay();
   }
 
   rightBigX() {
     this._clearRight();
     this._bigX(3, 27);
+    this._wrongAnswerSound();
     this.sendDisplay();
   }
 
   leftX() {
     this._clearLeft();
     this._X(7, 0);
+    this._wrongAnswerSound();
     this.sendDisplay();
   }
 
@@ -733,6 +757,7 @@ export class MainController {
     this._clearLeft();
     this._X(7, 0);
     this._X(4, 0);
+    this._wrongAnswerSound();
     this.sendDisplay();
   }
 
@@ -741,12 +766,14 @@ export class MainController {
     this._X(7, 0);
     this._X(4, 0);
     this._X(1, 0);
+    this._wrongAnswerSound();
     this.sendDisplay();
   }
 
   rightX() {
     this._clearRight();
     this._X(7, 27);
+    this._wrongAnswerSound();
     this.sendDisplay();
   }
 
@@ -754,6 +781,7 @@ export class MainController {
     this._clearRight();
     this._X(7, 27);
     this._X(4, 27);
+    this._wrongAnswerSound();
     this.sendDisplay();
   }
 
@@ -762,6 +790,7 @@ export class MainController {
     this._X(7, 27);
     this._X(4, 27);
     this._X(1, 27);
+    this._wrongAnswerSound();
     this.sendDisplay();
   }
 
@@ -818,6 +847,7 @@ export class MainController {
     this.display.ptsMiddle = this.display.multiplier * ptsTotal;
     this.setSubstr(aIdx + 1, 6, ans + ' '.repeat(20 - (ans + pts).length) + pts);
     this.setSubstr(answerCnt + 2, 19, 'suma ' + (ptsTotal > 9 ? '' : ' ') + ptsTotal);
+    this._correctAnswerSound();
     this.sendDisplay();
   }
 }
