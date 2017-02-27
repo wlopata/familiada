@@ -4,48 +4,58 @@ import routing from './main.routes';
 
 export class MainController {
   questions = [
-    [ 
-      // 'Na jakich imprezach Kwaq ściągnął spodnie?',
-      ['wesele marebuszy', 23],
-      ['koncert strachów', 18],
-      ['wesele miłki i m.', 13],
-      ['wesele pędzipioł', 7],
-      ['u gruszki', 5],
-      ['koncert sławomira', 2]
-    ],
     [
       // 'Więcej niż jedna bania'
-      ['kolejka', 23],
-      ['lorneta', 18],
-      ['flaszka/półlitry', 13],
-      ['lama', 7],
-      ['owca', 5],
-      ['dwie banie', 4]
+      ['dwie banie', 25],
+      ['lorneta', 16],
+      ['lama', 15],
+      ['owca', 12],
+      ['kolejka', 8],
+      ['flaszka/półlitry', 3]
     ],
-    [
-      // 'Gdzie zasypia Kwaq?',
-      ['w łóżku', 23],
-      ['w mpk', 18],
-      ['w kinie', 13],
-      ['na imprezie', 7],
-      ['wszędzie', 5],
-    ],
-    [
-      // 'W jakich miejscach Kwaku rozwalił sobie ryj?',
-      ['przed domówką', 23],
-      ['na starowiślnej', 18],
-      ['w łodzi', 13],
-      ['w bosutowie', 8]
+    [ 
+      // 'Na jakich imprezach Kwaq ściągnął spodnie?',
+      ['wesele pędzipioł', 20],
+      ['w kiblu', 18],
+      ['wesele miłki i m.', 20],
+      ['koncert strachów', 14],
+      ['wesele marebuszy', 8],
+      ['u gruszki', 6],
+      ['koncert sławomira', 4],
     ],
     [
       // 'Dlaczego nauczyciele mają za dobrze?','
-      ['urlop', 23],
-      ['ferie', 18],
-      ['wakacje', 13],
+      ['nastoletnie dup:', 30],
+      ['wakacje', 25],
+      ['studniówka', 20],
       ['dzień nauczyciela', 11],
-      ['zarobki', 7],
-      ['dziewczynki', 5],
-      ['studniówka', 5]
+      ['urlop', 7],
+      ['ferie', 4],
+      ['zarobki', 1]
+    ],
+    [
+      // 'Jaką piosenkę dobrze jest zaśpiewać, gdy jest się pijanym?',
+      ['amour toujours', 25],
+      ['szósty dzień:', 23],
+      ['oo o o o, kończy:', 18],
+      ['chryzantemy', 13],
+      ['o mój rozmarynie', 8],
+      ['bara bara bara', 3]
+    ],
+    [
+      // 'Gdzie zasypia Kwaq?',
+      ['wszędzie', 27],
+      ['w kinie', 23],
+      ['w mpk', 17],
+      ['na imprezie', 13],
+      ['w łóżku', 8]
+    ],
+    [
+      // 'W jakich miejscach Kwaku rozwalił sobie ryj?',
+      ['w łodzi',30],
+      ['przed domówką', 23],
+      ['na starowiślnej', 18],
+      ['w bosutowie', 8]
     ],
     [
       // 'W co przebrali się goście na poprzednich urodzinach Kwaka?',
@@ -54,13 +64,6 @@ export class MainController {
       ['kot', 13],
       ['za nic', 8]
     ],
-    [
-      // 'Jaką piosenkę dobrze jest zaśpiewać, gdy jest się pijanym?',
-      ['amour to\'yousfds', 23],
-      ['oo o o o, kończy:', 18],
-      ['chryzantemy', 13],
-      ['o mój rozmarynie', 8]
-    ]
   ];
   cleanDisplay = {
     ptsLeft: 0,
