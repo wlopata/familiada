@@ -2,7 +2,6 @@
   <br /><br />
   <div>
     <button ng-click="$ctrl.playIntro()"><h2>intro</h2></button> 
-    <button ng-click="$ctrl.playFinalCaptions()"><h2>napisy końcowe</h2></button> 
   </div>
   <br />
   <br />
@@ -47,22 +46,29 @@
   </div>
 
   <button ng-click="$ctrl.startFinal()"><h2>rozpocznij finał</h2></button>
+  <button ng-click="$ctrl.playSameAnswer()"><h2>odpowiedź była</h2></button>
+    <button ng-click="$ctrl.playFinalCaptions()"><h2>napisy końcowe</h2></button> 
   <br /><br />
   <div class="row">
     <form name="$ctrl.finalAnswers" novalidate>
       <div class="col-xs-6">
         <div ng-repeat="i in [1, 2, 3, 4, 5]">
-         <input type="text" style="font-family: monospace;" size="12" name="ansL{{i}}"/>
-         <input type="text" style="font-family: monospace;" size="3" name="ptsL{{i}}" value="0" />
-         <button ng-click="$ctrl.syncFinalAnswer(i, 'L')">Sync L{{i}}</button>
+         <input type="text" style="font-family: monospace;" size="12" name="ansL{{i}}" value="----" />
+         <input type="text" style="font-family: monospace;" size="3" name="ptsL{{i}}" value="0" /><br />
+         <button ng-click="$ctrl.syncFinalAnswer(i, 'L')">ANS</button>
+         <button ng-click="$ctrl.syncFinalPoints(i, 'L')">PTS</button>
+         <button ng-click="$ctrl.syncFinalAnswerAndPoints(i, 'L')">ANS + PTS</button>
          <br /><br />
         </div>
       </div>
       <div class="col-xs-6">
         <div ng-repeat="i in [1, 2, 3, 4, 5]">
-         <input type="text" style="font-family: monospace;" size="12" name="ansR{{i}}"/>
-         <input type="text" style="font-family: monospace;" size="3" name="ptsR{{i}}" value="0" />
-         <button ng-click="$ctrl.syncFinalAnswer(i, 'R')">Sync R{{i}}</button>
+         <input type="text" style="font-family: monospace;" size="12" name="ansR{{i}}" value="----" />
+         <input type="text" style="font-family: monospace;" size="3" name="ptsR{{i}}" value="0" /><br />
+         <!--<button ng-click="$ctrl.noAnswer(i, 'R')">DUPA</button>-->
+         <button ng-click="$ctrl.syncFinalAnswer(i, 'R')">ANS</button>
+         <button ng-click="$ctrl.syncFinalPoints(i, 'R')">PTS</button>
+         <button ng-click="$ctrl.syncFinalAnswerAndPoints(i, 'R')">ANS + PTS</button>
          <br /><br />
         </div>
       </div>

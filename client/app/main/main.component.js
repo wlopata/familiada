@@ -536,6 +536,15 @@ export class MainController {
       '     ',
       '     '
     ],
+    '-': [
+      '     ',
+      '     ',
+      '     ',
+      'XXXXX',
+      '     ',
+      '     ',
+      '     '
+    ],
     ':': [
       '     ',
       '     ',
@@ -778,6 +787,12 @@ export class MainController {
     this.display.soundId = Date.now();
   }
 
+  playSameAnswer() {
+    this.display.soundToPlay = 'same_answer';
+    this.display.soundId = Date.now();
+    this.sendDisplay();
+  }
+
   playIntro() {
     this.display.soundToPlay = 'intro';
     var prev = this.display.soundId;
@@ -930,20 +945,52 @@ export class MainController {
     this.sendDisplay();
   }
 
-  syncFinalAnswer(id, side) {
+  noAnswer(id, side) {
+    document.getElementsByName('ans' + side + id)[0].value = '----';
+  }
+
+  _syncFinalAnswer(id, side) {
     var ans = document.getElementsByName('ans' + side + id)[0].value.toLowerCase();
-    var pts = Math.floor(Math.random() * 3);
-
     if (side == 'L') {
-      this.setSubstr(id + 1, 0, ' '.repeat(11 - ans.length) + ans + ' '.repeat(pts > 9 ? 1 : 2) + pts);
+      this.setSubstr(id + 1, 0, ' '.repeat(11 - ans.length) + ans);
     } else {
-      this.setSubstr(id + 1, 16, ' '.repeat(pts > 9 ? 0 : 1) + pts + ' ' + ans + ' '.repeat(11 - ans.length));
+      this.setSubstr(id + 1, 19, ans + ' '.repeat(11 - ans.length));
     }
+  }
 
+  _syncFinalPoints(id, side) {
+    var pts = Number(document.getElementsByName('pts' + side + id)[0].value);
+    if (side == 'L') {
+      this.setSubstr(id + 1, 12, ' '.repeat(pts > 9 ? 0 : 1) + pts);
+    } else {
+      this.setSubstr(id + 1, 16, ' '.repeat(pts > 9 ? 0 : 1) + pts);
+    }
     this.display.ptsMiddle += pts;
     this.setSubstr(8, 6, 'suma' + ' '.repeat(4 - ('' + this.display.ptsMiddle).length) + this.display.ptsMiddle);
+    return pts > 0;
+  }
 
-    if (pts > 0) {
+  syncFinalAnswer(id, side) {
+    this._syncFinalAnswer(id, side);
+    this.display.soundToPlay = 'final_answer_suspence';
+    this.display.soundId = Date.now();
+    this.sendDisplay();
+  }
+
+  syncFinalPoints(id, side) {
+    if (this._syncFinalPoints(id, side)) {
+      this.display.soundToPlay = 'correct_answer';
+    } else {
+      this.display.soundToPlay = 'wrong_answer';
+    }
+    this.display.soundId = Date.now();
+    this.sendDisplay();
+  }
+
+  syncFinalAnswerAndPoints(id, side) {
+    this._syncFinalAnswer(id, side);
+    var success = this._syncFinalPoints(id, side);
+    if (success) {
       this._correctAnswerFinalSound();
     } else {
       this._wrongAnswerSound();

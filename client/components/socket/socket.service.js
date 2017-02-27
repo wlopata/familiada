@@ -63,6 +63,8 @@ function Socket(socketFactory) {
           'final_captions': '/assets/sounds/napisy_koncowe.wav',
           'pre_final': '/assets/sounds/przerywnik_przed_finalem.wav',
           'correct_answer_final': '/assets/sounds/poprawna_odpowiedz_final.wav',
+          'final_answer_suspence': '/assets/sounds/dzwoneczek_final.wav',
+          'same_answer': '/assets/sounds/bledna_odpowiedz_final.wav',
         };
         if (array.soundId != item.soundId && item.soundToPlay in soundMap) {
           if (item.soundId in playedSoundIds) {
