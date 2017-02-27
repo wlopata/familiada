@@ -69,7 +69,7 @@ function Socket(socketFactory) {
             console.log('duplicate sound detected!');
           } else {
             playedSoundIds[item.soundId] = true;
-            console.log('playing sound: ' + item.soundToPlay);
+            console.log('playing sound: ' + item.soundToPlay + ' - ' + item.soundId);
             var audio = new Audio(soundMap[item.soundToPlay]);
             audio.play();
           }

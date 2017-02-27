@@ -30,6 +30,7 @@ var display = {
   currentQuestionIdx: -1,
   soundToPlay: '',
   soundId: '',
+  shouldBeAddingPoints: true,
   main: [
     '                              ',
     '                              ',

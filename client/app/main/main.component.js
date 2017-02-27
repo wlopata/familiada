@@ -72,6 +72,7 @@ export class MainController {
     currentQuestionIdx: -1,
     soundToPlay: '',
     soundId: '',
+    shouldBeAddingPoints: true,
     main: [
       '                              ',
       '                              ',
@@ -96,6 +97,7 @@ export class MainController {
     currentQuestionIdx: -1,
     soundToPlay: 'pre_final',
     soundId: '',
+    shouldBeAddingPoints: true,
     main: [
       '                              ',
       '                              ',
@@ -778,8 +780,10 @@ export class MainController {
 
   playIntro() {
     this.display.soundToPlay = 'intro';
+    var prev = this.display.soundId;
     this.display.soundId = Date.now();
     this.sendDisplay();
+    console.log('SENDING INTRO ' + this.display.soundId, + ' prev soundId: ' + prev);
   }
 
   playFinalCaptions() {
@@ -856,17 +860,39 @@ export class MainController {
     }
   }
 
+  pointsInStack() {
+    var pts = 0;
+    var anss = Object.keys(this.display.answersRevealed);
+    for (var i = 0; i < anss.length; i++) {
+      pts += this.questions[this.display.currentQuestionIdx][anss[i]][1];
+    }
+    return pts;
+  }
+
+  _updatePtsInStack() {
+    var ptsTotal = 0;
+    if (this.display.shouldBeAddingPoints) {
+      ptsTotal = this.pointsInStack();
+    }
+    this.display.ptsInStack = ptsTotal;
+    this.display.ptsMiddle = this.display.multiplier * ptsTotal;
+    var answerCnt = this.questions[this.display.currentQuestionIdx].length;
+    this.setSubstr(answerCnt + 2, 19, 'suma ' + (ptsTotal > 9 ? '' : ' ') + ptsTotal);
+  }
+
   leftWon() {
+    this.display.shouldBeAddingPoints = false;
     this.display.ptsLeft += this.display.ptsMiddle;
-    this.display.ptsMiddle = this.display.ptsInStack = 0;
+    this._updatePtsInStack();
     this._roundStartsOrEndsSound();
     this.sendDisplay();
   }
 
 
   rightWon() {
+    this.display.shouldBeAddingPoints = false;
     this.display.ptsRight += this.display.ptsMiddle;
-    this.display.ptsMiddle = this.display.ptsInStack = 0;
+    this._updatePtsInStack();
     this._roundStartsOrEndsSound();
     this.sendDisplay();
   }
@@ -875,6 +901,7 @@ export class MainController {
     this._clearAll();
     this.display.answersRevealed = {};
     this.display.currentQuestionIdx = qIdx;
+    this.display.shouldBeAddingPoints = true;
 
     var answerCnt = this.questions[qIdx].length;
     for (var ans = 1; ans <= answerCnt; ans++) {
@@ -885,27 +912,14 @@ export class MainController {
     this.sendDisplay();
   }
 
-  pointsInStack() {
-    var pts = 0;
-    var anss = Object.keys(this.display.answersRevealed);
-    for (var i = 0; i < anss.length; i++) {
-      pts += this.questions[this.display.currentQuestionIdx][anss[i]][1];
-    }
-    return pts;
-  }
-
   answer(aIdx, ans, pts) {
     if (this.display.currentQuestionIdx == -1) {
       console.warn('Current question is not defined!');
       return;
     }
-    var answerCnt = this.questions[this.display.currentQuestionIdx].length;
     this.display.answersRevealed[aIdx] = true;
-    var ptsTotal = this.pointsInStack();
-    this.display.ptsInStack = ptsTotal;
-    this.display.ptsMiddle = this.display.multiplier * ptsTotal;
+    this._updatePtsInStack();
     this.setSubstr(aIdx + 1, 6, ans + ' '.repeat(20 - (ans + pts).length) + pts);
-    this.setSubstr(answerCnt + 2, 19, 'suma ' + (ptsTotal > 9 ? '' : ' ') + ptsTotal);
     this._correctAnswerSound();
     this.sendDisplay();
   }
@@ -917,7 +931,7 @@ export class MainController {
   }
 
   syncFinalAnswer(id, side) {
-    var ans = document.getElementsByName('ans' + side + id)[0].value;
+    var ans = document.getElementsByName('ans' + side + id)[0].value.toLowerCase();
     var pts = Math.floor(Math.random() * 3);
 
     if (side == 'L') {
