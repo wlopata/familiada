@@ -29,7 +29,7 @@ import control from './control/control.component';
 
 import './app.css';
 
-angular.module('sklepixApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
+angular.module('familiadaApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
   uiBootstrap, _Auth, account, admin, navbar, footer, main, constants, socket, util, control
 ])
   .config(routeConfig)
@@ -48,7 +48,7 @@ angular.module('sklepixApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-
 
 angular.element(document)
   .ready(() => {
-    angular.bootstrap(document, ['sklepixApp'], {
+    angular.bootstrap(document, ['familiadaApp'], {
       strictDi: true
     });
   });

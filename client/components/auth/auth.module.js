@@ -25,7 +25,7 @@ function addInterceptor($httpProvider) {
   $httpProvider.interceptors.push('authInterceptor');
 }
 
-export default angular.module('sklepixApp.auth', [constants, util, ngCookies, uiRouter])
+export default angular.module('familiadaApp.auth', [constants, util, ngCookies, uiRouter])
   .factory('authInterceptor', authInterceptor)
   .run(routerDecorator)
   .factory('Auth', AuthService)

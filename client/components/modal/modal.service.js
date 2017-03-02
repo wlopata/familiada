@@ -73,6 +73,6 @@ export function Modal($rootScope, $uibModal) {
   };
 }
 
-export default angular.module('sklepixApp.Modal', [])
+export default angular.module('familiadaApp.Modal', [])
   .factory('Modal', Modal)
   .name;

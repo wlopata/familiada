@@ -13,7 +13,7 @@ export class ControlComponent {
   }
 }
 
-export default angular.module('sklepixApp.control', [uiRouter])
+export default angular.module('familiadaApp.control', [uiRouter])
   .config(routes)
   .component('control', {
     template: require('./control.html'),

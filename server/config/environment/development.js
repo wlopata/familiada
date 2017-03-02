@@ -7,7 +7,7 @@ module.exports = {
 
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://localhost/sklepix-dev'
+    uri: 'mongodb://localhost/familiada-dev'
   },
 
   // Seed database on startup

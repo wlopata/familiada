@@ -7,7 +7,7 @@
 
 module.exports = {
   DOMAIN: 'http://localhost:9000',
-  SESSION_SECRET: 'sklepix-secret',
+  SESSION_SECRET: 'familiada-secret',
 
   FACEBOOK_ID: 'app-id',
   FACEBOOK_SECRET: 'secret',

@@ -5,6 +5,6 @@ import {
   UtilService
 } from './util.service';
 
-export default angular.module('sklepixApp.util', [])
+export default angular.module('familiadaApp.util', [])
   .factory('Util', UtilService)
   .name;

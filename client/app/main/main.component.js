@@ -1002,7 +1002,7 @@ export class MainController {
   }
 }
 
-export default angular.module('sklepixApp.main', [uiRouter])
+export default angular.module('familiadaApp.main', [uiRouter])
   .config(routing)
   .component('main', {
     template: require('./main.html'),

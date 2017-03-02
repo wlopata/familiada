@@ -111,6 +111,6 @@ function Socket(socketFactory) {
   };
 }
 
-export default angular.module('sklepixApp.socket', [])
+export default angular.module('familiadaApp.socket', [])
   .factory('socket', Socket)
   .name;
