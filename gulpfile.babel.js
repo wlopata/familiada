@@ -14,7 +14,6 @@ import lazypipe from 'lazypipe';
 import nodemon from 'nodemon';
 import {Server as KarmaServer} from 'karma';
 import runSequence from 'run-sequence';
-import {protractor, webdriver_update} from 'gulp-protractor';
 import {Instrumenter} from 'isparta';
 import webpack from 'webpack-stream';
 import makeWebpackConfig from './webpack.make';
@@ -37,7 +36,6 @@ const paths = {
         views: `${clientPath}/{app,components}/**/*.html`,
         mainView: `${clientPath}/index.html`,
         test: [`${clientPath}/{app,components}/**/*.{spec,mock}.js`],
-        e2e: ['e2e/**/*.spec.js']
     },
     server: {
         scripts: [
@@ -236,13 +234,6 @@ gulp.task('webpack:test', function() {
         .pipe(gulp.dest('.tmp'));
 });
 
-gulp.task('webpack:e2e', function() {
-    const webpackE2eConfig = makeWebpackConfig({ E2E: true });
-    return gulp.src(webpackE2eConfig.entry.app)
-        .pipe(webpack(webpackE2eConfig))
-        .pipe(gulp.dest('.tmp'));
-});
-
 gulp.task('styles', () => {
     return gulp.src(paths.client.styles)
         .pipe(styles())
@@ -432,18 +423,6 @@ gulp.task('coverage:integration', () => {
         .pipe(mocha())
         .pipe(istanbul())
         // Creating the reports after tests ran
-});
-
-// Downloads the selenium webdriver
-gulp.task('webdriver_update', webdriver_update);
-
-gulp.task('test:e2e', ['webpack:e2e', 'env:all', 'env:test', 'start:server', 'webdriver_update'], cb => {
-    gulp.src(paths.client.e2e)
-        .pipe(protractor({
-            configFile: 'protractor.conf.js',
-        }))
-        .on('error', e => { throw e })
-        .on('end', () => { process.exit() });
 });
 
 gulp.task('test:client', done => {
