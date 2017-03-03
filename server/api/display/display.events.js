@@ -1,5 +1,5 @@
 /**
- * Thing model events
+ * Display model events
  */
 
 'use strict';
