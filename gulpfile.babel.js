@@ -12,9 +12,7 @@ import http from 'http';
 import open from 'open';
 import lazypipe from 'lazypipe';
 import nodemon from 'nodemon';
-import {Server as KarmaServer} from 'karma';
 import runSequence from 'run-sequence';
-import {Instrumenter} from 'isparta';
 import webpack from 'webpack-stream';
 import makeWebpackConfig from './webpack.make';
 
@@ -35,7 +33,6 @@ const paths = {
         mainStyle: `${clientPath}/app/app.css`,
         views: `${clientPath}/{app,components}/**/*.html`,
         mainView: `${clientPath}/index.html`,
-        test: [`${clientPath}/{app,components}/**/*.{spec,mock}.js`],
     },
     server: {
         scripts: [
@@ -43,12 +40,7 @@ const paths = {
           `!${serverPath}/config/local.env.sample.js`
         ],
         json: [`${serverPath}/**/*.json`],
-        test: {
-          integration: [`${serverPath}/**/*.integration.js`, 'mocha.global.js'],
-          unit: [`${serverPath}/**/*.spec.js`, 'mocha.global.js']
-        }
     },
-    karma: 'karma.conf.js',
     dist: 'dist'
 };
 
@@ -96,30 +88,8 @@ let lintClientScripts = lazypipe()
     .pipe(plugins.eslint, `${clientPath}/.eslintrc`)
     .pipe(plugins.eslint.format);
 
-const lintClientTestScripts = lazypipe()
-    .pipe(plugins.eslint, {
-        configFile: `${clientPath}/.eslintrc`,
-        envs: [
-            'browser',
-            'es6',
-            'mocha'
-        ]
-    })
-    .pipe(plugins.eslint.format);
-
 let lintServerScripts = lazypipe()
     .pipe(plugins.eslint, `${serverPath}/.eslintrc`)
-    .pipe(plugins.eslint.format);
-
-let lintServerTestScripts = lazypipe()
-    .pipe(plugins.eslint, {
-        configFile: `${serverPath}/.eslintrc`,
-        envs: [
-            'node',
-            'es6',
-            'mocha'
-        ]
-    })
     .pipe(plugins.eslint.format);
 
 let transpileServer = lazypipe()
@@ -131,15 +101,6 @@ let transpileServer = lazypipe()
         ]
     })
     .pipe(plugins.sourcemaps.write, '.');
-
-let mocha = lazypipe()
-    .pipe(plugins.mocha, {
-        reporter: 'spec',
-        timeout: 5000,
-        require: [
-            './mocha.conf'
-        ]
-    });
 
 let istanbul = lazypipe()
     .pipe(plugins.istanbul.writeReports)
@@ -169,11 +130,6 @@ gulp.task('env:all', () => {
     }
     plugins.env({
         vars: localConfig
-    });
-});
-gulp.task('env:test', () => {
-    plugins.env({
-        vars: {NODE_ENV: 'test'}
     });
 });
 gulp.task('env:prod', () => {
@@ -227,13 +183,6 @@ gulp.task('webpack:dist', function() {
         .pipe(gulp.dest(`${paths.dist}/client`));
 });
 
-gulp.task('webpack:test', function() {
-    const webpackTestConfig = makeWebpackConfig({ TEST: true });
-    return gulp.src(webpackTestConfig.entry.app)
-        .pipe(webpack(webpackTestConfig))
-        .pipe(gulp.dest('.tmp'));
-});
-
 gulp.task('styles', () => {
     return gulp.src(paths.client.styles)
         .pipe(styles())
@@ -249,26 +198,13 @@ gulp.task('transpile:server', () => {
 gulp.task('lint:scripts', cb => runSequence(['lint:scripts:client', 'lint:scripts:server'], cb));
 
 gulp.task('lint:scripts:client', () => {
-    return gulp.src(_.union(
-        paths.client.scripts,
-        _.map(paths.client.test, blob => '!' + blob)
-    ))
+    return gulp.src(paths.client.scripts)
         .pipe(lintClientScripts());
 });
 
 gulp.task('lint:scripts:server', () => {
-    return gulp.src(_.union(paths.server.scripts, _.map(paths.server.test, blob => '!' + blob)))
+    return gulp.src(paths.server.scripts)
         .pipe(lintServerScripts());
-});
-
-gulp.task('lint:scripts:clientTest', () => {
-    return gulp.src(paths.client.test)
-        .pipe(lintClientScripts());
-});
-
-gulp.task('lint:scripts:serverTest', () => {
-    return gulp.src(paths.server.test)
-        .pipe(lintServerTestScripts());
 });
 
 gulp.task('jscs', () => {
@@ -315,15 +251,9 @@ gulp.task('start:server:debug', () => {
 });
 
 gulp.task('watch', () => {
-    var testFiles = _.union(paths.client.test, paths.server.test.unit, paths.server.test.integration);
-
-    plugins.watch(_.union(paths.server.scripts, testFiles))
+    plugins.watch(paths.server.scripts)
         .pipe(plugins.plumber())
         .pipe(lintServerScripts());
-
-    plugins.watch(_.union(paths.server.test.unit, paths.server.test.integration))
-        .pipe(plugins.plumber())
-        .pipe(lintServerTestScripts());
 });
 
 gulp.task('serve', cb => {
@@ -368,72 +298,6 @@ gulp.task('serve:dist', cb => {
         cb);
 });
 
-gulp.task('test', cb => {
-    return runSequence('test:server', 'test:client', cb);
-});
-
-gulp.task('test:server', cb => {
-    runSequence(
-        'env:all',
-        'env:test',
-        'mocha:unit',
-        'mocha:integration',
-        cb);
-});
-
-gulp.task('mocha:unit', () => {
-    return gulp.src(paths.server.test.unit)
-        .pipe(mocha());
-});
-
-gulp.task('mocha:integration', () => {
-    return gulp.src(paths.server.test.integration)
-        .pipe(mocha());
-});
-
-gulp.task('test:server:coverage', cb => {
-  runSequence('coverage:pre',
-              'env:all',
-              'env:test',
-              'coverage:unit',
-              'coverage:integration',
-              cb);
-});
-
-gulp.task('coverage:pre', () => {
-  return gulp.src(paths.server.scripts)
-    // Covering files
-    .pipe(plugins.istanbul({
-        instrumenter: Instrumenter, // Use the isparta instrumenter (code coverage for ES6)
-        includeUntested: true
-    }))
-    // Force `require` to return covered files
-    .pipe(plugins.istanbul.hookRequire());
-});
-
-gulp.task('coverage:unit', () => {
-    return gulp.src(paths.server.test.unit)
-        .pipe(mocha())
-        .pipe(istanbul())
-        // Creating the reports after tests ran
-});
-
-gulp.task('coverage:integration', () => {
-    return gulp.src(paths.server.test.integration)
-        .pipe(mocha())
-        .pipe(istanbul())
-        // Creating the reports after tests ran
-});
-
-gulp.task('test:client', done => {
-    new KarmaServer({
-      configFile: `${__dirname}/${paths.karma}`,
-      singleRun: true
-    }, err => {
-        done(err);
-        process.exit(err);
-    }).start();
-});
 
 /********************
  * Build

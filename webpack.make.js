@@ -14,10 +14,8 @@ module.exports = function makeWebpackConfig(options) {
     /**
      * Environment type
      * BUILD is for generating minified builds
-     * TEST is for generating test builds
      */
     var BUILD = !!options.BUILD;
-    var TEST = !!options.TEST;
     var DEV = !!options.DEV;
 
     /**
@@ -30,78 +28,54 @@ module.exports = function makeWebpackConfig(options) {
     /**
      * Entry
      * Reference: http://webpack.github.io/docs/configuration.html#entry
-     * Should be an empty object if it's generating a test build
-     * Karma will set this when it's a test build
      */
-    if(TEST) {
-        config.entry = {};
-    } else {
-        config.entry = {
-            app: './client/app/app.js',
-            polyfills: './client/polyfills.js',
-            vendor: [
-                'angular',
-                'angular-animate',
-                'angular-aria',
-                'angular-cookies',
-                'angular-resource',
+    config.entry = {
+        app: './client/app/app.js',
+        polyfills: './client/polyfills.js',
+        vendor: [
+            'angular',
+            'angular-animate',
+            'angular-aria',
+            'angular-cookies',
+            'angular-resource',
 
-                'angular-sanitize',
-                'angular-socket-io',
-                'angular-ui-bootstrap',
-                'angular-ui-router',
-                'lodash',
-            ]
-        };
-    }
+            'angular-sanitize',
+            'angular-socket-io',
+            'angular-ui-bootstrap',
+            'angular-ui-router',
+            'lodash',
+        ]
+    };
 
     /**
      * Output
      * Reference: http://webpack.github.io/docs/configuration.html#output
-     * Should be an empty object if it's generating a test build
-     * Karma will handle setting it up for you when it's a test build
      */
-    if(TEST) {
-        config.output = {};
-    } else {
-        config.output = {
-            // Absolute output directory
-            path: BUILD ? path.join(__dirname, '/dist/client/') : path.join(__dirname, '/.tmp/'),
+    config.output = {
+        // Absolute output directory
+        path: BUILD ? path.join(__dirname, '/dist/client/') : path.join(__dirname, '/.tmp/'),
 
-            // Output path from the view of the page
-            // Uses webpack-dev-server in development
-            publicPath: BUILD || DEV ? '/' : `http://localhost:${8080}/`,
-            //publicPath: BUILD ? '/' : 'http://localhost:' + env.port + '/',
+        // Output path from the view of the page
+        // Uses webpack-dev-server in development
+        publicPath: BUILD || DEV ? '/' : `http://localhost:${8080}/`,
+        //publicPath: BUILD ? '/' : 'http://localhost:' + env.port + '/',
 
-            // Filename for entry points
-            // Only adds hash in build mode
-            filename: BUILD ? '[name].[hash].js' : '[name].bundle.js',
+        // Filename for entry points
+        // Only adds hash in build mode
+        filename: BUILD ? '[name].[hash].js' : '[name].bundle.js',
 
-            // Filename for non-entry points
-            // Only adds hash in build mode
-            chunkFilename: BUILD ? '[name].[hash].js' : '[name].bundle.js'
-        };
-    }
+        // Filename for non-entry points
+        // Only adds hash in build mode
+        chunkFilename: BUILD ? '[name].[hash].js' : '[name].bundle.js'
+    };
 
-
-
-    if(TEST) {
-        config.resolve = {
-            modulesDirectories: [
-                'node_modules'
-            ],
-            extensions: ['', '.js', '.ts']
-        };
-    }
 
     /**
      * Devtool
      * Reference: http://webpack.github.io/docs/configuration.html#devtool
      * Type of sourcemap to use per build type
      */
-    if(TEST) {
-        config.devtool = 'inline-source-map';
-    } else if(BUILD || DEV) {
+    if(BUILD || DEV) {
         config.devtool = 'source-map';
     } else {
         config.devtool = 'eval';
@@ -172,7 +146,7 @@ module.exports = function makeWebpackConfig(options) {
             // Reference: https://github.com/postcss/postcss-loader
             // Postprocess your css with PostCSS plugins
             test: /\.css$/,
-            loader: !TEST
+            loader: true
                 // Reference: https://github.com/webpack/extract-text-webpack-plugin
                 // Extract css files in production builds
                 //
@@ -189,25 +163,6 @@ module.exports = function makeWebpackConfig(options) {
         test: /\.js$/,
         loader: 'ng-annotate?single_quotes'
     }];
-
-    // ISPARTA INSTRUMENTER LOADER
-    // Reference: https://github.com/ColCh/isparta-instrumenter-loader
-    // Instrument JS files with Isparta for subsequent code coverage reporting
-    // Skips node_modules and spec files
-    if(TEST) {
-        config.module.preLoaders.push({
-            //delays coverage til after tests are run, fixing transpiled source coverage error
-            test: /\.js$/,
-            exclude: /(node_modules|spec\.js|mock\.js)/,
-            loader: 'isparta-instrumenter',
-            query: {
-                babel: {
-                    // optional: ['runtime', 'es7.classProperties', 'es7.decorators']
-                }
-            }
-        });
-    }
-
 
     /**
      * PostCSS
@@ -238,37 +193,32 @@ module.exports = function makeWebpackConfig(options) {
         // Extract css files
         // Disabled when in test mode or not in build mode
         new ExtractTextPlugin('[name].[hash].css', {
-            disable: !BUILD || TEST
+            disable: !BUILD
         })
     ];
 
-    if(!TEST) {
-        config.plugins.push(new CommonsChunkPlugin({
-            name: 'vendor',
+    config.plugins.push(new CommonsChunkPlugin({
+        name: 'vendor',
 
-            // filename: "vendor.js"
-            // (Give the chunk a different name)
+        // filename: "vendor.js"
+        // (Give the chunk a different name)
 
-            minChunks: Infinity
-            // (with more entries, this ensures that no other module
-            //  goes into the vendor chunk)
-        }));
-    }
+        minChunks: Infinity
+        // (with more entries, this ensures that no other module
+        //  goes into the vendor chunk)
+    }));
 
-    // Skip rendering index.html in test mode
     // Reference: https://github.com/ampedandwired/html-webpack-plugin
     // Render index.html
-    if(!TEST) {
-        let htmlConfig = {
-            template: 'client/_index.html',
-            filename: '../client/index.html',
-            alwaysWriteToDisk: true
-        }
-        config.plugins.push(
-          new HtmlWebpackPlugin(htmlConfig),
-          new HtmlWebpackHarddiskPlugin()
-        );
+    let htmlConfig = {
+        template: 'client/_index.html',
+        filename: '../client/index.html',
+        alwaysWriteToDisk: true
     }
+    config.plugins.push(
+      new HtmlWebpackPlugin(htmlConfig),
+      new HtmlWebpackHarddiskPlugin()
+    );
 
     // Add build specific plugins
     if(BUILD) {
@@ -316,14 +266,6 @@ module.exports = function makeWebpackConfig(options) {
     }
 
     config.cache = DEV;
-
-    if(TEST) {
-        config.stats = {
-            colors: true,
-            reasons: true
-        };
-        config.debug = false;
-    }
 
     /**
      * Dev server configuration
