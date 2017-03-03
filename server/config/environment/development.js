@@ -10,7 +10,4 @@ module.exports = {
     uri: 'mongodb://localhost/familiada-dev'
   },
 
-  // Seed database on startup
-  seedDB: true
-
 };
