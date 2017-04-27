@@ -20,7 +20,7 @@ function handleError(res, statusCode) {
   };
 }
 
-var display = {
+var displayHistory = [{
   ptsLeft: 0,
   ptsRight: 0,
   ptsInStack: 0,
@@ -43,7 +43,7 @@ var display = {
     '                              ',
     '                              ',
   ]
-};
+}];
 
 /*var display = [
   'a ą b c ć d e ę f g h i j k l ',
@@ -59,12 +59,24 @@ var display = {
 ];*/
 
 export function get(req, res) {
-  res.send(display);
+  res.send(displayHistory.slice(-1)[0]);
 }
 
 export function post(req, res) {
   console.log('New display!')
-  display = req.body;
+  displayHistory.push(req.body);
+  if (displayHistory.length > 20) {
+    displayHistory.shift();
+  }
   res.end('it worked!');
-  DisplayEvents.emit('save', display);
+  DisplayEvents.emit('save', req.body);
+}
+
+export function undo(req, res) {
+  console.log('Undo :O')
+  if (displayHistory.length > 0) {
+    displayHistory.pop();
+  }
+  res.end('it worked!');
+  DisplayEvents.emit('save', displayHistory.slice(-1)[0]);
 }

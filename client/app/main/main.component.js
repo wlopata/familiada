@@ -717,6 +717,10 @@ export class MainController {
     this.$http.post('/api/display', this.display);
   }
 
+  undo() {
+    this.$http.delete('/api/display');
+  }
+
   clearDisplay() {
     console.log('clear display');
     Object.assign(this.display, this.cleanDisplay);
