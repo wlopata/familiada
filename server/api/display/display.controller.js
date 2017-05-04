@@ -74,8 +74,9 @@ export function post(req, res) {
 
 export function undo(req, res) {
   console.log('Undo :O')
-  if (displayHistory.length > 0) {
+  if (displayHistory.length > 1) {
     displayHistory.pop();
+    displayHistory[displayHistory.length - 1].soundToPlay = '';
   }
   res.end('it worked!');
   DisplayEvents.emit('save', displayHistory.slice(-1)[0]);
