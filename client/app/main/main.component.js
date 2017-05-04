@@ -949,6 +949,7 @@ export class MainController {
   startFinal() {
     Object.assign(this.display, this.finalDisplay);
     this.display.soundId = Date.now();
+    this.display.currentQuestionIdx = "final";
     this.sendDisplay();
   }
 
@@ -1003,6 +1004,18 @@ export class MainController {
       this._wrongAnswerSound();
     }
     this.sendDisplay();
+  }
+
+  isGameStarting() {
+    return this.display.currentQuestionIdx == -1;
+  }
+
+  isFinal() {
+    return this.display.currentQuestionIdx == 'final';
+  }
+
+  isQuestion() {
+    return !this.isGameStarting() && !this.isFinal();
   }
 }
 
