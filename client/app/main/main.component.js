@@ -4,7 +4,7 @@ import routing from './main.routes';
 
 export class MainController {
   questions = [{
-      question: 'Więcej niż jedna bania',
+      question: 'Więcej niż jedna bania?',
       answers: [
 	      ['dwie banie', 25],
 	      ['lorneta', 16],
@@ -17,8 +17,8 @@ export class MainController {
       question: 'Na jakich imprezach Kwaq ściągnął spodnie?',
       answers: [
         ['wesele pędzipioł', 20],
-        ['w kiblu', 18],
         ['wesele miłki i m.', 20],
+        ['w kiblu', 18],
         ['koncert strachów', 14],
         ['wesele marebuszy', 8],
         ['u gruszki', 6],
