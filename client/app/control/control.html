@@ -14,32 +14,33 @@
     </ul>
   </div>
   <br />
-  <div class="row" style="text-align: center" ng-show="$ctrl.isQuestion()">
-    <div class="col-xs-4">
-      <button ng-click="$ctrl.clearLeft()">clear</button><br /><br />
-      <button ng-click="$ctrl.leftBigX()">Big X</button><br /><br />
-      <button ng-click="$ctrl.leftX()">X</button><br /><br />
-      <button ng-click="$ctrl.leftXX()">XX</button><br /><br />
-      <button ng-click="$ctrl.leftXXX()">XXX</button><br /><br />
-      <button ng-click="$ctrl.leftWon()">Win!</button> <input type="text" ng-model="$ctrl.display.ptsLeft" size="4"><br /><br />
-    </div>
-    <div class="col-xs-4">
-      <button ng-click="$ctrl.clearBoth()">clear</button><br /><br />
-      <div style="text-align: center">
-        <div ng-repeat="q in $ctrl.questions track by $index" ng-show="$ctrl.display.currentQuestionIdx == $index">
+  <div style="text-align: center"
+       ng-repeat="q in $ctrl.questions track by $index"
+       ng-show="$ctrl.isQuestion() && $ctrl.display.currentQuestionIdx == $index">
+          <strong>{{ q.question }}</strong><br /><br />
+    <div class="row">
+      <div class="col-xs-4">
+        <button ng-click="$ctrl.clearLeft()">clear</button><br /><br />
+        <button ng-click="$ctrl.leftBigX()">Big X</button><br /><br />
+        <button ng-click="$ctrl.leftX()">X</button><br /><br />
+        <button ng-click="$ctrl.leftXX()">XX</button><br /><br />
+        <button ng-click="$ctrl.leftXXX()">XXX</button><br /><br />
+        <button ng-click="$ctrl.leftWon()">Win!</button> <input type="text" ng-model="$ctrl.display.ptsLeft" size="4"><br /><br />
+      </div>
+      <div class="col-xs-4">
+        <button ng-click="$ctrl.clearBoth()">clear</button><br /><br />
         <div ng-repeat="ans in q.answers track by $index">
           <button ng-click="$ctrl.answer($index, ans[0], ans[1])">{{ ans[0] }} -- {{ ans[1] }} pkt</button><br /><br />
         </div>
       </div>
-    </div>
-    </div>
-    <div class="col-xs-4">
-      <button ng-click="$ctrl.clearRight()">clear</button><br /><br />
-      <button ng-click="$ctrl.rightBigX()">Big X</button><br /><br />
-      <button ng-click="$ctrl.rightX()">X</button><br /><br />
-      <button ng-click="$ctrl.rightXX()">XX</button><br /><br />
-      <button ng-click="$ctrl.rightXXX()">XXX</button><br /><br />
-      <button ng-click="$ctrl.rightWon()">Win!</button> <input type="text" ng-model="$ctrl.display.ptsRight" size="4"><br /><br />
+      <div class="col-xs-4">
+        <button ng-click="$ctrl.clearRight()">clear</button><br /><br />
+        <button ng-click="$ctrl.rightBigX()">Big X</button><br /><br />
+        <button ng-click="$ctrl.rightX()">X</button><br /><br />
+        <button ng-click="$ctrl.rightXX()">XX</button><br /><br />
+        <button ng-click="$ctrl.rightXXX()">XXX</button><br /><br />
+        <button ng-click="$ctrl.rightWon()">Win!</button> <input type="text" ng-model="$ctrl.display.ptsRight" size="4"><br /><br />
+      </div>
     </div>
   </div>
 
