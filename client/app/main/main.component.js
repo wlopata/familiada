@@ -3,67 +3,74 @@ import uiRouter from 'angular-ui-router';
 import routing from './main.routes';
 
 export class MainController {
-  questions = [
-    [
-      // 'Więcej niż jedna bania'
-      ['dwie banie', 25],
-      ['lorneta', 16],
-      ['lama', 15],
-      ['owca', 12],
-      ['kolejka', 8],
-      ['flaszka/półlitry', 3]
-    ],
-    [ 
-      // 'Na jakich imprezach Kwaq ściągnął spodnie?',
-      ['wesele pędzipioł', 20],
-      ['w kiblu', 18],
-      ['wesele miłki i m.', 20],
-      ['koncert strachów', 14],
-      ['wesele marebuszy', 8],
-      ['u gruszki', 6],
-      ['koncert sławomira', 4],
-    ],
-    [
-      // 'Dlaczego nauczyciele mają za dobrze?','
-      ['nastoletnie dup:', 30],
-      ['wakacje', 25],
-      ['studniówka', 20],
-      ['dzień nauczyciela', 11],
-      ['urlop', 7],
-      ['ferie', 4],
-      ['zarobki', 1]
-    ],
-    [
-      // 'Jaką piosenkę dobrze jest zaśpiewać, gdy jest się pijanym?',
-      ['amour toujours', 25],
-      ['szósty dzień:', 23],
-      ['oo o o o, kończy:', 18],
-      ['chryzantemy', 13],
-      ['o mój rozmarynie', 8],
-      ['bara bara bara', 3]
-    ],
-    [
-      // 'Gdzie zasypia Kwaq?',
-      ['wszędzie', 27],
-      ['w kinie', 23],
-      ['w mpk', 17],
-      ['na imprezie', 13],
-      ['w łóżku', 8]
-    ],
-    [
-      // 'W jakich miejscach Kwaku rozwalił sobie ryj?',
-      ['w łodzi',30],
-      ['przed domówką', 23],
-      ['na starowiślnej', 18],
-      ['w bosutowie', 8]
-    ],
-    [
-      // 'W co przebrali się goście na poprzednich urodzinach Kwaka?',
-      ['banan', 23],
-      ['smok', 18],
-      ['kot', 13],
-      ['za nic', 8]
-    ],
+  questions = [{
+      question: 'Więcej niż jedna bania',
+      answers: [
+	      ['dwie banie', 25],
+	      ['lorneta', 16],
+	      ['lama', 15],
+	      ['owca', 12],
+	      ['kolejka', 8],
+	      ['flaszka/półlitry', 3]
+      ],
+    }, {
+      question: 'Na jakich imprezach Kwaq ściągnął spodnie?',
+      answers: [
+        ['wesele pędzipioł', 20],
+        ['w kiblu', 18],
+        ['wesele miłki i m.', 20],
+        ['koncert strachów', 14],
+        ['wesele marebuszy', 8],
+        ['u gruszki', 6],
+        ['koncert sławomira', 4],
+      ],
+    }, {
+      question: 'Dlaczego nauczyciele mają za dobrze?',
+      answers: [
+        ['nastoletnie dup:', 30],
+        ['wakacje', 25],
+        ['studniówka', 20],
+        ['dzień nauczyciela', 11],
+        ['urlop', 7],
+        ['ferie', 4],
+        ['zarobki', 1]
+      ],
+    }, {
+      question: 'Jaką piosenkę dobrze jest zaśpiewać, gdy jest się pijanym?',
+      answers: [
+        ['amour toujours', 25],
+        ['szósty dzień:', 23],
+        ['oo o o o, kończy:', 18],
+        ['chryzantemy', 13],
+        ['o mój rozmarynie', 8],
+        ['bara bara bara', 3]
+      ],
+    }, {
+      question: 'Gdzie zasypia Kwaq?',
+      answers: [
+        ['wszędzie', 27],
+        ['w kinie', 23],
+        ['w mpk', 17],
+        ['na imprezie', 13],
+        ['w łóżku', 8]
+      ],
+    }, {
+      question: 'W jakich miejscach Kwaku rozwalił sobie ryj?',
+      answers: [
+        ['w łodzi',30],
+        ['przed domówką', 23],
+        ['na starowiślnej', 18],
+        ['w bosutowie', 8]
+      ],
+    }, {
+      question: 'W co przebrali się goście na poprzednich urodzinach Kwaka?',
+      answers: [
+        ['banan', 23],
+        ['smok', 18],
+        ['kot', 13],
+        ['za nic', 8]
+      ],
+    },
   ];
   cleanDisplay = {
     ptsLeft: 0,
@@ -886,7 +893,7 @@ export class MainController {
     var pts = 0;
     var anss = Object.keys(this.display.answersRevealed);
     for (var i = 0; i < anss.length; i++) {
-      pts += this.questions[this.display.currentQuestionIdx][anss[i]][1];
+      pts += this.questions[this.display.currentQuestionIdx].answers[anss[i]][1];
     }
     return pts;
   }
@@ -898,7 +905,7 @@ export class MainController {
     }
     this.display.ptsInStack = ptsTotal;
     this.display.ptsMiddle = this.display.multiplier * ptsTotal;
-    var answerCnt = this.questions[this.display.currentQuestionIdx].length;
+    var answerCnt = this.questions[this.display.currentQuestionIdx].answers.length;
     this.setSubstr(answerCnt + 2, 19, 'suma ' + (ptsTotal > 9 ? '' : ' ') + ptsTotal);
   }
 
@@ -925,7 +932,7 @@ export class MainController {
     this.display.currentQuestionIdx = qIdx;
     this.display.shouldBeAddingPoints = true;
 
-    var answerCnt = this.questions[qIdx].length;
+    var answerCnt = this.questions[qIdx].answers.length;
     for (var ans = 1; ans <= answerCnt; ans++) {
       this.setSubstr(ans, 4, ans + ' ' + ':'.repeat(17) + ' __');
     }

@@ -27,7 +27,7 @@
       <button ng-click="$ctrl.clearBoth()">clear</button><br /><br />
       <div style="text-align: center">
         <div ng-repeat="q in $ctrl.questions track by $index" ng-show="$ctrl.display.currentQuestionIdx == $index">
-        <div ng-repeat="ans in q track by $index">
+        <div ng-repeat="ans in q.answers track by $index">
           <button ng-click="$ctrl.answer($index, ans[0], ans[1])">{{ ans[0] }} -- {{ ans[1] }} pkt</button><br /><br />
         </div>
       </div>
