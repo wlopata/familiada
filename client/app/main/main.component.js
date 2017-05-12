@@ -6,12 +6,12 @@ export class MainController {
   questions = [{
       question: 'Więcej niż jedna bania?',
       answers: [
-	      ['dwie banie', 25],
-	      ['lorneta', 16],
-	      ['lama', 15],
-	      ['owca', 12],
-	      ['kolejka', 8],
-	      ['flaszka/półlitry', 3]
+        ['dwie banie', 25],
+        ['lorneta', 16],
+        ['lama', 15],
+        ['owca', 12],
+        ['kolejka', 8],
+        ['flaszka/półlitry', 3]
       ],
     }, {
       question: 'Na jakich imprezach Kwaq ściągnął spodnie?',
