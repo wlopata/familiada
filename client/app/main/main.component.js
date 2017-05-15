@@ -375,6 +375,15 @@ export class MainController {
       'X   X',
       ' XXX '
     ],
+    v: [
+      'X   X',
+      'X   X',
+      'X   X',
+      'X   X',
+      'X   X',
+      ' X X ',
+      '  X  '
+    ],
     w: [
       'X   X',
       'X   X',
