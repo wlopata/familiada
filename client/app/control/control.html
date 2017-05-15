@@ -6,7 +6,7 @@
     <button ng-repeat="mltpl in [1, 2, 3]"
             ng-click="$ctrl.display.multiplier = mltpl"
             style="margin: 2px"><h2>x{{ mltpl }}</h2></button>
-    <h2 style="display: inline">Obecnie: <strong style="color: red">{{$ctrl.display.multiplier}}x</strong> stack = </h2> <input type="text" ng-model="$ctrl.display.ptsMiddle" size="4">
+    <h2 style="display: inline">Currently: <strong style="color: red">{{$ctrl.display.multiplier}}x</strong> stack = </h2> <input type="text" ng-model="$ctrl.display.ptsMiddle" size="4">
     <br /><br />
     <ul class="nav nav-tabs">
       <li ng-repeat="q in $ctrl.questions track by $index"><a href="#" ng-click="$ctrl.newQuestion($index)">Question {{ $index + 1}}</a></li>
@@ -17,7 +17,7 @@
   <div style="text-align: center"
        ng-repeat="q in $ctrl.questions track by $index"
        ng-show="$ctrl.isQuestion() && $ctrl.display.currentQuestionIdx == $index">
-          <strong>{{ q.question }}</strong><br /><br />
+    <strong>Question {{ $index + 1 }}: {{ q.question }}</strong><br /><br />
     <div class="row">
       <div class="col-xs-4">
         <button ng-click="$ctrl.clearLeft()">clear</button><br /><br />
