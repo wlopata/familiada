@@ -16,5 +16,6 @@ gulp build
 cd dist/
 git init
 heroku git:remote -a familiada
+cd ..
 gulp buildcontrol:heroku
 ```
