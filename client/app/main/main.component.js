@@ -4,74 +4,65 @@ import routing from './main.routes';
 
 export class MainController {
   questions = [{
-      question: 'Więcej niż jedna bania?',
+      // 1
+      question: 'More than one animal?',
       answers: [
-        ['dwie banie', 25],
-        ['lorneta', 16],
-        ['lama', 15],
-        ['owca', 12],
-        ['kolejka', 8],
-        ['flaszka/półlitry', 3]
+        ['sheep', 32],
+        ['herd', 20],
+        ['lame', 15],
+        ['pack', 14],
+        ['colony', 5],
+        ['two animals', 4],
+        ['three animals', 4],
       ],
     }, {
-      question: 'Na jakich imprezach Kwaq ściągnął spodnie?',
+      // 2
+      question: 'What is the most fun in manager\'s work?',
       answers: [
-        ['wesele pędzipioł', 20],
-        ['wesele miłki i m.', 20],
-        ['w kiblu', 18],
-        ['koncert strachów', 14],
-        ['wesele marebuszy', 8],
-        ['u gruszki', 6],
-        ['koncert sławomira', 4],
+        ['firing people', 18],
+        ['it\'s no fun', 18],
+        ['meetings', 16],
+        ['meetings free time', 14],
+        ['escalations',   11],
+        ['perf/calibrations', 9],
+        ['growing people', 5],
       ],
     }, {
-      question: 'Dlaczego nauczyciele mają za dobrze?',
+      // 3
+      question: 'Name starting with letter P.',
       answers: [
-        ['nastoletnie dup:', 30],
-        ['wakacje', 25],
-        ['studniówka', 20],
-        ['dzień nauczyciela', 11],
-        ['urlop', 7],
-        ['ferie', 4],
-        ['zarobki', 1]
+        ['peter', 24],
+        ['penn', 22],
+        ['phil', 20],
+        ['prince', 12],
+        ['patrik', 8],
+        ['pablo', 8],
       ],
     }, {
-      question: 'Jaką piosenkę dobrze jest zaśpiewać, gdy jest się pijanym?',
+      // 4
+      question: 'Animal starting with letter P.',
       answers: [
-        ['amour toujours', 25],
-        ['szósty dzień:', 23],
-        ['oo o o o, kończy:', 18],
-        ['chryzantemy', 13],
-        ['o mój rozmarynie', 8],
-        ['bara bara bara', 3]
+        ['pig', 43],
+        ['panda', 18],
+        ['penguin', 15],
+        ['parrot', 12],
+        ['piranha', 5],
+        ['pollo', 5],
       ],
     }, {
-      question: 'Gdzie zasypia Kwaq?',
+      // 5
+      question: 'Warsaw restaurant that is open 24 hours a day?',
       answers: [
-        ['wszędzie', 27],
-        ['w kinie', 23],
-        ['w mpk', 17],
-        ['na imprezie', 13],
-        ['w łóżku', 8]
+        ['mcdonalds', 28],
+        ['google', 21],
+        ['warszawa wschodnia', 16],
+        ['mamma mia', 12],
+        ['fenicja', 8],
+        ['alkohole 24', 4],
       ],
-    }, {
-      question: 'W jakich miejscach Kwaku rozwalił sobie ryj?',
-      answers: [
-        ['w łodzi',30],
-        ['przed domówką', 23],
-        ['na starowiślnej', 18],
-        ['w bosutowie', 8]
-      ],
-    }, {
-      question: 'W co przebrali się goście na poprzednich urodzinach Kwaka?',
-      answers: [
-        ['banan', 23],
-        ['smok', 18],
-        ['kot', 13],
-        ['za nic', 8]
-      ],
-    },
+    }
   ];
+
   cleanDisplay = {
     ptsLeft: 0,
     ptsRight: 0,
