@@ -3,63 +3,70 @@ import uiRouter from 'angular-ui-router';
 import routing from './main.routes';
 
 export class MainController {
-  questions = [{
-      // 1
-      question: 'More than one animal?',
-      answers: [
-        ['sheep', 32],
-        ['herd', 20],
-        ['lame', 15],
-        ['pack', 14],
-        ['colony', 5],
-        ['two animals', 4],
-        ['three animals', 4],
+  questionSets = [{
+      name: 'Set number one',
+      questions: [{
+          // 1
+          question: 'More than one animal?',
+          answers: [
+            ['sheep', 32],
+            ['herd', 20],
+            ['lame', 15],
+            ['pack', 14],
+            ['colony', 5],
+            ['two animals', 4],
+            ['three animals', 4],
+          ],
+        }, {
+          // 2
+          question: 'What is the most fun in manager\'s work?',
+          answers: [
+            ['firing people', 18],
+            ['it\'s no fun', 18],
+            ['meetings', 16],
+            ['meetings free time', 14],
+            ['escalations',   11],
+            ['perf/calibrations', 9],
+            ['growing people', 5],
+          ],
+        }, {
+          // 3
+          question: 'Name starting with letter P.',
+          answers: [
+            ['peter', 24],
+            ['penn', 22],
+            ['phil', 20],
+            ['prince', 12],
+            ['patrik', 8],
+            ['pablo', 8],
+          ],
+        }, {
+          // 4
+          question: 'Animal starting with letter P.',
+          answers: [
+            ['pig', 43],
+            ['panda', 18],
+            ['penguin', 15],
+            ['parrot', 12],
+            ['piranha', 5],
+            ['pollo', 5],
+          ],
+        }, {
+          // 5
+          question: 'Warsaw restaurant that is open 24 hours a day?',
+          answers: [
+            ['mcdonalds', 28],
+            ['google', 21],
+            ['warszawa wschodnia', 16],
+            ['mamma mia', 12],
+            ['fenicja', 8],
+            ['alkohole 24', 4],
+          ],
+        }
       ],
     }, {
-      // 2
-      question: 'What is the most fun in manager\'s work?',
-      answers: [
-        ['firing people', 18],
-        ['it\'s no fun', 18],
-        ['meetings', 16],
-        ['meetings free time', 14],
-        ['escalations',   11],
-        ['perf/calibrations', 9],
-        ['growing people', 5],
-      ],
-    }, {
-      // 3
-      question: 'Name starting with letter P.',
-      answers: [
-        ['peter', 24],
-        ['penn', 22],
-        ['phil', 20],
-        ['prince', 12],
-        ['patrik', 8],
-        ['pablo', 8],
-      ],
-    }, {
-      // 4
-      question: 'Animal starting with letter P.',
-      answers: [
-        ['pig', 43],
-        ['panda', 18],
-        ['penguin', 15],
-        ['parrot', 12],
-        ['piranha', 5],
-        ['pollo', 5],
-      ],
-    }, {
-      // 5
-      question: 'Warsaw restaurant that is open 24 hours a day?',
-      answers: [
-        ['mcdonalds', 28],
-        ['google', 21],
-        ['warszawa wschodnia', 16],
-        ['mamma mia', 12],
-        ['fenicja', 8],
-        ['alkohole 24', 4],
-      ],
+      name: 'Empty set, because why not.',
+      questions: [],
     }
   ];
 
