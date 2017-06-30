@@ -8,6 +8,9 @@
             style="margin: 2px"><h2>x{{ mltpl }}</h2></button>
     <h2 style="display: inline">Currently: <strong style="color: red">{{$ctrl.display.multiplier}}x</strong> stack = </h2> <input type="text" ng-model="$ctrl.display.ptsMiddle" size="4">
     <br /><br />
+    Question set:
+    <select ng-model="$ctrl.questions" ng-options="qs.questions as qs.name for qs in $ctrl.questionSets" ng-change="$ctrl.clearDisplay()"></select>
+    <br />
     <ul class="nav nav-tabs">
       <li ng-repeat="q in $ctrl.questions track by $index"><a href="#" ng-click="$ctrl.newQuestion($index)">Question {{ $index + 1}}</a></li>
       <li><a href="#" ng-click="$ctrl.startFinal()">Final</a></li>
