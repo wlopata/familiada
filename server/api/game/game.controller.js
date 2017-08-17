@@ -67,7 +67,7 @@ export function post(req, res) {
     gameHistory.shift();
   }
   res.end('it worked!');
-  GameEvents.emit('save', req.body);
+  GameEvents.emit('save', { id: gameId, data: req.body });
 }
 
 export function undo(req, res) {
@@ -78,5 +78,5 @@ export function undo(req, res) {
     gameHistory[gameHistory.length - 1].soundToPlay = '';
   }
   res.end('it worked!');
-  GameEvents.emit('save', gameHistory.slice(-1)[0]);
+  GameEvents.emit('save', { id: gameId, data: gameHistory.slice(-1)[0] });
 }

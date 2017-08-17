@@ -15,7 +15,7 @@ export function register(socket) {
 
 function createListener(event, socket) {
   return function(doc) {
-    socket.emit(event, doc);
+    socket.emit(event + '_' + doc.id, doc.data);
   };
 }
 

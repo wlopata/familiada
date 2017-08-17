@@ -30,14 +30,14 @@ function Socket(socketFactory) {
      * @param {Array} array
      * @param {Function} cb
      */
-    syncUpdates(modelName, array, cb) {
+    syncUpdates(modelName, itemId, array, cb) {
       cb = cb || angular.noop;
 
       /**
        * Syncs item creation/updates on 'model:save'
        */
       var playedSoundIds = {};
-      socket.on(`${modelName}:save`, function(item) {
+      socket.on(`${modelName}:save_${itemId}`, function(item) {
         /*
         var oldItem = _.find(array, {
           _id: item._id
@@ -79,23 +79,6 @@ function Socket(socketFactory) {
         Object.assign(array, item);
         cb(event, item, array);
       });
-
-      socket.on(`${modelName}:set`, function(item) {
-        Object.assign(array, item)
-
-        cb(event, item, array);
-      });
-
-      /**
-       * Syncs removed items on 'model:remove'
-       */
-      socket.on(`${modelName}:remove`, function(item) {
-        var event = 'deleted';
-        _.remove(array, {
-          _id: item._id
-        });
-        cb(event, item, array);
-      });
     },
 
     /**
@@ -103,10 +86,8 @@ function Socket(socketFactory) {
      *
      * @param modelName
      */
-    unsyncUpdates(modelName) {
-      socket.removeAllListeners(`${modelName}:set`);
-      socket.removeAllListeners(`${modelName}:save`);
-      socket.removeAllListeners(`${modelName}:remove`);
+    unsyncUpdates(modelName, itemId) {
+      socket.removeAllListeners(`${modelName}:save_${itemId}`);
     }
   };
 }

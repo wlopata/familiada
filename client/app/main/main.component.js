@@ -715,7 +715,7 @@ export class MainController {
     this.gameId = $stateParams.gameId;
     Object.assign(this.display, this.cleanDisplay);
     $scope.$on('$destroy', function() {
-      socket.unsyncUpdates('game');
+      socket.unsyncUpdates('game', $stateParams.gameId);
     });
   }
 
@@ -723,7 +723,7 @@ export class MainController {
     this.$http.get('/api/game/' + this.gameId)
       .then(response => {
         this.display = response.data;
-        this.socket.syncUpdates('game', this.display);
+        this.socket.syncUpdates('game', this.gameId, this.display);
       });
   }
 
