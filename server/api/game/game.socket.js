@@ -4,11 +4,11 @@
 
 'use strict';
 
-import DisplayEvents from './display.events';
+import GameEvents from './game.events';
 
 export function register(socket) {
-  var listener = createListener(`display:save`, socket);
-  DisplayEvents.on('save', listener);
+  var listener = createListener(`game:save`, socket);
+  GameEvents.on('save', listener);
   socket.on('disconnect', removeListener('save', listener));
 }
 
@@ -21,6 +21,6 @@ function createListener(event, socket) {
 
 function removeListener(event, listener) {
   return function() {
-    DisplayEvents.removeListener(event, listener);
+    GameEvents.removeListener(event, listener);
   };
 }

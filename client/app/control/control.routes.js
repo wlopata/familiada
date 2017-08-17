@@ -4,7 +4,7 @@ export default function($stateProvider) {
   'ngInject';
   $stateProvider
     .state('control', {
-      url: '/control',
+      url: '/:gameId/control',
       template: '<control></control>'
     });
 }

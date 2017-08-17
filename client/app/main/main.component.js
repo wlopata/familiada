@@ -709,30 +709,30 @@ export class MainController {
   };
 
   /*@ngInject*/
-  constructor($http, $scope, socket) {
+  constructor($http, $stateParams, $scope, socket) {
     this.$http = $http;
     this.socket = socket;
+    this.gameId = $stateParams.gameId;
     Object.assign(this.display, this.cleanDisplay);
-
     $scope.$on('$destroy', function() {
-      socket.unsyncUpdates('display');
+      socket.unsyncUpdates('game');
     });
   }
 
   $onInit() {
-    this.$http.get('/api/display')
+    this.$http.get('/api/game/' + this.gameId)
       .then(response => {
         this.display = response.data;
-        this.socket.syncUpdates('display', this.display);
+        this.socket.syncUpdates('game', this.display);
       });
   }
 
   sendDisplay() {
-    this.$http.post('/api/display', this.display);
+    this.$http.post('/api/game/' + this.gameId, this.display);
   }
 
   undo() {
-    this.$http.delete('/api/display');
+    this.$http.delete('/api/game/' + this.gameId);
   }
 
   clearDisplay() {

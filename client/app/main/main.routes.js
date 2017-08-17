@@ -4,7 +4,7 @@ export default function routes($stateProvider) {
   'ngInject';
 
   $stateProvider.state('main', {
-    url: '/',
+    url: '/:gameId',
     template: '<main></main>'
   });
 }

@@ -16,7 +16,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
-  require('../api/display/display.socket').register(socket);
+  require('../api/game/game.socket').register(socket);
 }
 
 export default function(socketio) {
