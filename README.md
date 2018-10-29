@@ -2,9 +2,8 @@
 Web application to play Familiada with your friends (https://en.wikipedia.org/wiki/Familiada).
 
 ## Demo
-Main display: http://familiada.herokuapp.com
-
-Control panel: http://familiada.herokuapp.com/control
+Go to http://familiada.herokuapp.com. Open 'main display' and 
+'control panel' links in two separate tabs.
 
 ## Develop
 `npm install && npm start`
