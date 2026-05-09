@@ -1,21 +1,14 @@
-/**
- * Express configuration
- */
-
-'use strict';
-
-import express from 'express';
-import favicon from 'serve-favicon';
-import morgan from 'morgan';
-import shrinkRay from 'shrink-ray';
+import errorHandler from 'errorhandler';
+import config from './environment';
 import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
-import cookieParser from 'cookie-parser';
-import errorHandler from 'errorhandler';
+import express from 'express';
+import favicon from 'serve-favicon';
 import path from 'path';
-import config from './environment';
+import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
+import compression from 'compression';
 import passport from 'passport';
-import session from 'express-session';
 
 export default function(app) {
   var env = app.get('env');
@@ -35,7 +28,7 @@ export default function(app) {
   app.set('views', `${config.root}/server/views`);
   app.engine('html', require('ejs').renderFile);
   app.set('view engine', 'html');
-  app.use(shrinkRay());
+  app.use(compression());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
   app.use(methodOverride());
@@ -51,9 +44,6 @@ export default function(app) {
     const compiler = webpack(webpackConfig);
     const browserSync = require('browser-sync').create();
 
-    /**
-     * Run Browsersync and use middleware for Hot Module Replacement
-     */
     browserSync.init({
       open: false,
       logFileChanges: false,
@@ -73,10 +63,6 @@ export default function(app) {
       plugins: ['bs-fullscreen-message']
     });
 
-    /**
-     * Reload all devices when bundle is complete
-     * or send a fullscreen error message to the browser instead
-     */
     compiler.plugin('done', function(stats) {
       console.log('webpack done hook');
       if(stats.hasErrors() || stats.hasWarnings()) {
@@ -91,6 +77,6 @@ export default function(app) {
   }
 
   if(env === 'development' || env === 'test') {
-    app.use(errorHandler()); // Error handler - has to be last
+    app.use(errorHandler());
   }
 }
