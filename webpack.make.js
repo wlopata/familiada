@@ -104,7 +104,7 @@ module.exports = function makeWebpackConfig(options) {
             // Transpile .js files using babel-loader
             // Compiles ES6 and ES7 into ES5 code
             test: /\.js$/,
-            loader: 'babel',
+            loader: 'babel-loader',
             include: [
                 path.resolve(__dirname, 'client/'),
                 path.resolve(__dirname, 'node_modules/lodash-es/')
